@@ -1,0 +1,33 @@
+{
+  "name": "@etco-job-application/entry-site",
+  "version": "0.0.0",
+  "private": true,
+  "license": "NOLICENSE",
+  "scripts": {
+    "build": "webpack --mode production",
+    "checks": "yarn typecheck && yarn lint",
+    "start": "webpack-dev-server",
+    "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
+    "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
+    "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
+  },
+  "dependencies": {
+    "react": "~16.13.1",
+    "react-dom": "~16.13.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "babel-loader": "^8.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "ts-loader": "^7.0.3",
+    "ts-node": "^8.10.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
