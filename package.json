@@ -1,0 +1,34 @@
+{
+  "name": "etco-job-application",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gaishimo/etco-job-application.git"
+  },
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "clean": "lerna clean",
+    "build": "lerna run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.23.1",
+    "@typescript-eslint/parser": "^2.23.1",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "firebase-tools": "^8.2.0",
+    "lerna": "^3.20.2",
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.1",
+    "typescript": "~3.8.3"
+  }
+}
