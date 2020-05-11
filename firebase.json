@@ -1,2 +1,9 @@
 {
+  "functions": {
+    "source": "./packages/functions",
+    "predeploy": "cd packages/functions; yarn build"
+  },
+  "storage": {
+    "rules": "./firebase/firestore.rules" 
+  }
 }
