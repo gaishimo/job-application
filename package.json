@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/gaishimo/etco-job-application.git"
+    "url": "git+ssh://git@github.com/gaishimo/job-application.git"
   },
   "private": true,
   "workspaces": {
