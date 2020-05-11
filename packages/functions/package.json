@@ -1,0 +1,27 @@
+{
+  "name": "@etco-job-application/functions",
+  "version": "0.0.0",
+  "private": true,
+  "license": "NOLICENSE",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "10"
+  },
+  "scripts": {
+    "build": "../../node_modules/.bin/tsc",
+    "checks": "yarn typecheck && yarn lint",
+    "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
+    "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
+    "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6"
+  }
+}
