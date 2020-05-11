@@ -15,11 +15,12 @@ module.exports = {
   },
   plugins: [
     new HTMLPlugin({
-      template: path.join(__dirname, "src/public/index.html"),
+      template: path.join(__dirname, "public/index.html"),
     }),
   ],
   devServer: {
     host: "127.0.0.1",
     disableHostCheck: true,
+    contentBase: path.resolve(__dirname, "public"),
   },
 }
