@@ -1,0 +1,35 @@
+version: 2.1
+
+references:
+  cache_key_of_dependencies: &cache_key_of_dependencies dependencies-v{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:10
+
+workflows:
+  check_and_build:
+    jobs:
+      - check_and_build
+
+jobs:
+  check_and_build:
+    executor:
+      name: node
+    working_directory: ~/app
+    steps:
+      - run:
+          name: print info
+          command: 'echo "CIRCLECI_CACHE_VERSION: $CIRCLECI_CACHE_VERSION"'
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key_of_dependencies
+      - run: yarn install
+      - save_cache:
+          key: *cache_key_of_dependencies
+          paths:
+            - node_modules
+      - run: yarn checks
+      - run: yarn build
