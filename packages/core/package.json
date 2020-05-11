@@ -1,0 +1,22 @@
+{
+  "name": "@etco-job-application/core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "NOLICENSE",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "exit 0",
+    "checks": "yarn typecheck && yarn lint",
+    "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
+    "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
+    "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0"
+  }
+}
