@@ -14,10 +14,12 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@etco-job-application/core": "0.0.0",
+    "axios": "^0.19.2",
     "formik": "^2.1.4",
     "react": "~16.13.1",
     "react-autosize-textarea": "^7.0.0",
     "react-dom": "~16.13.1",
+    "react-spinners": "^0.8.3",
     "yup": "^0.28.5"
   },
   "devDependencies": {
@@ -31,6 +33,7 @@
     "@types/yup": "^0.28.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-emotion": "^10.0.33",
+    "dotenv": "^8.2.0",
     "html-webpack-plugin": "^4.3.0",
     "ts-loader": "^7.0.3",
     "ts-node": "^8.10.1",

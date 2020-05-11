@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
+import { useState, Fragment } from "react"
 import { useFormik } from "formik"
 import TextareaAutoSize from "react-autosize-textarea"
 import * as Yup from "yup"
+import BarLoader from "react-spinners/BarLoader"
 import { JOB_DATA } from "@etco-job-application/core"
+import * as apiRequests from "../libs/apiRequests"
 import FieldGroup from "./parts/FieldGroup"
 import { range } from "../utils/numberUtils"
 
@@ -13,6 +16,7 @@ const styles = {
     marginLeft: "auto",
     marginRight: "auto",
     padding: 40,
+    paddingBottom: 200,
   }),
   header: css({
     textAlign: "center",
@@ -80,6 +84,11 @@ const styles = {
     minWidth: 300,
     padding: "14px 20px",
   }),
+  progressBar: css({ borderRadius: 2 }),
+  entrySent: css({
+    textAlign: "center",
+    marginBottom: 100,
+  }),
 }
 
 type Fields = {
@@ -110,8 +119,23 @@ const validationSchema = Yup.object({
 })
 
 export default function EntryPage() {
+  const [entrySent, setEntrySent] = useState<boolean>(false)
+
   async function submit(values: Fields) {
-    // TODO フォーム値の送信
+    const fields = {
+      name: values.name,
+      email: values.email,
+      age: values.age,
+      job: values.job,
+      reason: values.reason,
+    }
+    try {
+      await apiRequests.addJobEntry(fields)
+      setEntrySent(true)
+    } catch (e) {
+      console.log(e)
+    }
+    // form.setSubmitting(false)
   }
 
   const form = useFormik<Fields>({
@@ -135,127 +159,160 @@ export default function EntryPage() {
   }
 
   const submittable =
-    Object.keys(form.errors).length === 0 &&
-    Object.keys(form.touched).length === 6
+    Object.keys(form.errors).length === 0 && form.values.policyAgreement
 
   return (
     <section>
       <div css={styles.page}>
         <h1 css={styles.header}>求人エントリー</h1>
-        <div css={styles.guide}>
-          ご応募される方は以下のフォームよりお願いします。
-        </div>
-        <form css={styles.form} onSubmit={form.handleSubmit}>
-          <FieldGroup label="氏名" fieldId="name" error={getErrorOf("name")}>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              css={[styles.input, hasError("name") && styles.inputErrored]}
-              placeholder="応募 太郎"
-              {...form.getFieldProps("name")}
-            />
-          </FieldGroup>
-          <FieldGroup
-            label="メールアドレス"
-            fieldId="email"
-            error={getErrorOf("email")}
-          >
-            <input
-              id="email"
-              name="email"
-              type="email"
-              css={[styles.input, hasError("email") && styles.inputErrored]}
-              placeholder="mail@example.com"
-              {...form.getFieldProps("email")}
-            />
-          </FieldGroup>
-          <FieldGroup label="年齢" fieldId="age" error={getErrorOf("age")}>
-            <select
-              id="age"
-              name="age"
-              css={[styles.select, hasError("age") && styles.inputErrored]}
-              {...form.getFieldProps("age")}
-            >
-              <option key="default" value={""}>
-                選択してください
-              </option>
-              {range(1, 100).map(i => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
-          </FieldGroup>
-          <FieldGroup label="希望職種" fieldId="job" error={getErrorOf("job")}>
-            <select
-              id="job"
-              name="job"
-              css={[styles.select, hasError("job") && styles.inputErrored]}
-              {...form.getFieldProps("job")}
-            >
-              <option key="default" value="">
-                選択してください
-              </option>
-              {JOB_DATA.map(job => (
-                <option key={job.id} value={job.id}>
-                  {job.name}
-                </option>
-              ))}
-            </select>
-          </FieldGroup>
-          <FieldGroup
-            label="希望理由"
-            fieldId="reason"
-            error={getErrorOf("reason")}
-          >
-            <TextareaAutoSize
-              id="reason"
-              name="reason"
-              css={[styles.textarea, hasError("reason") && styles.inputErrored]}
-              {...form.getFieldProps("reason")}
-              placeholder="志望動機、自己PR等ご入力ください"
-            />
-          </FieldGroup>
-          <div css={styles.policyArea}>
-            <p css={styles.policyGuide}>
-              個人情報のお取り扱いについては
-              <br />
-              <a
-                href="https://example.com"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                プライバシーポリシー
-              </a>
-              をご確認ください。
-            </p>
-            <div css={styles.policyAgreement}>
-              <input
-                type="checkbox"
-                id="policyAgreement"
-                name="policyAgreement"
-                css={styles.checkbox}
-                {...form.getFieldProps("policyAgreement")}
-              />
-              <label
-                htmlFor="policyAgreement"
-                css={styles.policyAgreementLabel}
-              >
-                プライバシーポリシーに同意する
-              </label>
+        {entrySent ? (
+          <div css={styles.entrySent}>
+            ご応募ありがとうございます。エントリーを受け付けました。
+            <br />
+            後日、担当よりご連絡させていただきます。
+          </div>
+        ) : (
+          <Fragment>
+            <div css={styles.guide}>
+              ご応募される方は以下のフォームよりお願いします。
             </div>
+            <form css={styles.form} onSubmit={form.handleSubmit}>
+              <FieldGroup
+                label="氏名"
+                fieldId="name"
+                error={getErrorOf("name")}
+              >
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  css={[styles.input, hasError("name") && styles.inputErrored]}
+                  placeholder="応募 太郎"
+                  {...form.getFieldProps("name")}
+                />
+              </FieldGroup>
+              <FieldGroup
+                label="メールアドレス"
+                fieldId="email"
+                error={getErrorOf("email")}
+              >
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  css={[styles.input, hasError("email") && styles.inputErrored]}
+                  placeholder="mail@example.com"
+                  {...form.getFieldProps("email")}
+                />
+              </FieldGroup>
+              <FieldGroup label="年齢" fieldId="age" error={getErrorOf("age")}>
+                <select
+                  id="age"
+                  name="age"
+                  css={[styles.select, hasError("age") && styles.inputErrored]}
+                  {...form.getFieldProps("age")}
+                >
+                  <option key="default" value={""}>
+                    選択してください
+                  </option>
+                  {range(1, 100).map(i => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </FieldGroup>
+              <FieldGroup
+                label="希望職種"
+                fieldId="job"
+                error={getErrorOf("job")}
+              >
+                <select
+                  id="job"
+                  name="job"
+                  css={[styles.select, hasError("job") && styles.inputErrored]}
+                  {...form.getFieldProps("job")}
+                >
+                  <option key="default" value="">
+                    選択してください
+                  </option>
+                  {JOB_DATA.map(job => (
+                    <option key={job.id} value={job.id}>
+                      {job.name}
+                    </option>
+                  ))}
+                </select>
+              </FieldGroup>
+              <FieldGroup
+                label="希望理由"
+                fieldId="reason"
+                error={getErrorOf("reason")}
+              >
+                <TextareaAutoSize
+                  id="reason"
+                  name="reason"
+                  css={[
+                    styles.textarea,
+                    hasError("reason") && styles.inputErrored,
+                  ]}
+                  {...form.getFieldProps("reason")}
+                  placeholder="志望動機、自己PR等ご入力ください"
+                />
+              </FieldGroup>
+              <div css={styles.policyArea}>
+                <p css={styles.policyGuide}>
+                  個人情報のお取り扱いについては
+                  <br />
+                  <a
+                    href="https://example.com"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    プライバシーポリシー
+                  </a>
+                  をご確認ください。
+                </p>
+                <div css={styles.policyAgreement}>
+                  <input
+                    type="checkbox"
+                    id="policyAgreement"
+                    name="policyAgreement"
+                    css={styles.checkbox}
+                    {...form.getFieldProps("policyAgreement")}
+                  />
+                  <label
+                    htmlFor="policyAgreement"
+                    css={styles.policyAgreementLabel}
+                  >
+                    プライバシーポリシーに同意する
+                  </label>
+                </div>
 
-            <div css={styles.policyAgreementError}>
-              {getErrorOf("policyAgreement")}
-            </div>
-          </div>
-          <div css={styles.action}>
-            <button css={styles.submit} disabled={!submittable} type="submit">
-              申し込み
-            </button>
-          </div>
-        </form>
+                <div css={styles.policyAgreementError}>
+                  {getErrorOf("policyAgreement")}
+                </div>
+              </div>
+              <div css={styles.action}>
+                {form.isSubmitting ? (
+                  <BarLoader
+                    height={6}
+                    width={200}
+                    css={styles.progressBar}
+                    color={"#007AFF"}
+                  />
+                ) : (
+                  <button
+                    css={styles.submit}
+                    disabled={!submittable}
+                    type="submit"
+                  >
+                    申し込み
+                  </button>
+                )}
+              </div>
+            </form>
+          </Fragment>
+        )}
       </div>
     </section>
   )
