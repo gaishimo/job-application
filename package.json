@@ -14,7 +14,8 @@
     "clean": "lerna clean",
     "build": "lerna run build",
     "checks": "lerna run checks",
-    "deploy:functions": "echo ${PROJECT_ID} ; firebase deploy --only functions --project ${PROJECT_ID}"
+    "deploy:functions": "firebase deploy --only functions --project ${PROJECT_ID}",
+    "deploy:firestore-rules": "firebase deploy --only firestore:rules --project ${PROJECT_ID}"
   },
   "dependencies": {},
   "devDependencies": {

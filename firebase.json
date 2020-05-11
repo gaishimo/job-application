@@ -3,7 +3,7 @@
     "source": "./packages/functions",
     "predeploy": "cd packages/functions; yarn build"
   },
-  "storage": {
+  "firestore": {
     "rules": "./firebase/firestore.rules" 
   }
 }
