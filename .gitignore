@@ -11,3 +11,4 @@ dist/
 /packages/functions/core
 
 package.temp.json
+.runtimeconfig.json
