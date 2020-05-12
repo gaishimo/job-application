@@ -32,3 +32,39 @@ yarn start
 ```
 yarn build
 ```
+
+## functions
+
+
+.envファイルを用意
+
+```
+cp packages/functions/.env.sample packages/functions/.env
+# 内容を編集
+```
+
+### config:set (function config値の設定)
+
+```
+yarn functions:config:set
+```
+
+### Build
+
+```
+yarn build
+```
+
+### Run Emulator
+
+```
+yarn emulator
+```
+
+### Deploy
+
+```
+yarn functions:deploy
+```
+
+
