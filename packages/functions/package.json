@@ -15,7 +15,8 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "./bin/updatePackageJson.sh",
-    "postdeploy": "./bin/rollbackPackage.json"
+    "postdeploy": "./bin/rollbackPackage.json",
+    "functions:config:set": "env $(cat .env | xargs) firebase functions:config:set --project ${PROJECT_ID} sendgrid.api_key=${SENDGRID_API_KEY}"
   },
   "dependencies": {
     "@etco-job-application/core": "0.0.0",
