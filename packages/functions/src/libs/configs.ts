@@ -4,6 +4,10 @@ type Configs = {
   sendgrid: {
     api_key: string
   }
+  notification_mail: {
+    from: string
+    to: string
+  }
 }
 
 type SendgridConfig = {

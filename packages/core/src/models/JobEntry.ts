@@ -1,8 +1,10 @@
 import * as yup from "yup"
+import * as firestore from "@google-cloud/firestore"
 import { Job, JOB_DATA } from "./Job"
 import { EntryStatus, ENTRY_STATUS_DATA } from "./EntryStatus"
 
-export default interface JobEntry {
+export interface JobEntry {
+  id?: string
   name: string
   email: string
   age: number
@@ -12,6 +14,14 @@ export default interface JobEntry {
   memo?: string | null
   entriedAt?: Date
   updatedAt?: Date
+}
+interface _JobEntry extends JobEntry {
+  entriedAt: any
+  updatedAt: any
+}
+interface FetchedJobEntry extends _JobEntry {
+  entriedAt: firestore.Timestamp
+  updatedAt: firestore.Timestamp
 }
 
 const schema = yup.object().shape({
@@ -34,4 +44,24 @@ const schema = yup.object().shape({
 
 export async function validateJobEntry(jobEntry: JobEntry): Promise<void> {
   await schema.validate(jobEntry)
+}
+
+export function generateJobEntryFromDB(
+  snapshot: firestore.DocumentSnapshot<firestore.DocumentData>,
+) {
+  if (!snapshot.exists) throw new Error("no document")
+  const data = snapshot.data() as FetchedJobEntry
+  if (data == null) throw new Error("empty data")
+  return {
+    id: snapshot.id,
+    name: data.name,
+    email: data.email,
+    age: data.age,
+    jobId: data.jobId,
+    reason: data.reason,
+    status: data.status,
+    memo: data.memo,
+    entriedAt: data.entriedAt.toDate(),
+    updatedAt: data.updatedAt.toDate(),
+  }
 }

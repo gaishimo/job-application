@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "../../node_modules/.bin/tsc",
+    "watch": "../../node_modules/.bin/tsc -w",
     "checks": "yarn typecheck && yarn lint",
     "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
     "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
@@ -16,10 +17,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "./bin/updatePackageJson.sh",
     "postdeploy": "./bin/rollbackPackage.json",
-    "functions:config:set": "env $(cat .env | xargs) firebase functions:config:set --project ${PROJECT_ID} sendgrid.api_key=${SENDGRID_API_KEY}"
+    "functions:config:get": "export $(cat .env | xargs) && firebase functions:config:get --project $PROJECT_ID",
+    "functions:config:set": "export $(cat .env | xargs) && firebase functions:config:set --project ${PROJECT_ID} sendgrid.api_key=${SENDGRID_API_KEY} notification_mail.from=${NOTIFICATION_MAIL_FROM} notification_mail.to=${NOTIFICATION_MAIL_TO}"
   },
   "dependencies": {
     "@etco-job-application/core": "0.0.0",
+    "@google-cloud/firestore": "^3.7.5",
+    "@sendgrid/mail": "^7.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^8.12.1",

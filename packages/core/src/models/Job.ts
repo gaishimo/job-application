@@ -8,3 +8,8 @@ export const JOB_DATA: Job[] = [
   { id: "enginner", name: "エンジニア" },
   { id: "designer", name: "デザイナー" },
 ]
+
+export function getJobName(id: string) {
+  const job = JOB_DATA.find(d => d.id === id)
+  return job ? job.name : ""
+}
