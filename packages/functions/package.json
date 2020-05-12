@@ -15,6 +15,7 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
   },
   "dependencies": {
+    "@etco-job-application/core": "*",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^8.12.1",
