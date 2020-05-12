@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "license": "NOLICENSE",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "exit 0",
+    "build": "../../node_modules/.bin/tsc",
     "checks": "yarn typecheck && yarn lint",
     "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
     "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
   },
   "dependencies": {
+    "yup": "^0.28.5"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
