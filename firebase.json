@@ -1,9 +1,23 @@
 {
   "functions": {
-    "source": "./packages/functions",
+    "source": "./packages/functions/",
     "predeploy": "cd packages/functions; yarn build"
   },
   "firestore": {
     "rules": "./firebase/firestore.rules" 
+  },
+  "emulators": {
+    "hub": {
+      "host": "127.0.0.1",
+      "port": "4400"
+    },
+    "functions": {
+      "host": "127.0.0.1",
+      "port": "5001"
+    },
+    "firestore": {
+      "host": "127.0.0.1",
+      "port": "8090"
+    }
   }
 }

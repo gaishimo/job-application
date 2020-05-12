@@ -14,6 +14,7 @@
     "clean": "lerna clean",
     "build": "lerna run build",
     "checks": "lerna run checks",
+    "emulator": "firebase emulators:start --project ${PROJECT_ID}",
     "deploy:functions": "firebase deploy --only functions --project ${PROJECT_ID}",
     "deploy:firestore-rules": "firebase deploy --only firestore:rules --project ${PROJECT_ID}"
   },
