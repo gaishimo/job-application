@@ -7,3 +7,7 @@ node_modules/
 dist/
 
 .env
+
+/packages/functions/core
+
+package.temp.json
