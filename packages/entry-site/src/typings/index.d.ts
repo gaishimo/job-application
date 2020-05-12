@@ -6,7 +6,7 @@ declare namespace Api {
       name: string
       email: string
       age: number
-      job: string
+      jobId: string
       reason: string
     }
   }

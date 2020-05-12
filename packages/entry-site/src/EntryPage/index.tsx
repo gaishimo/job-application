@@ -95,7 +95,7 @@ type Fields = {
   name: string
   email: string
   age: number
-  job: string
+  jobId: string
   reason: string
   policyAgreement: boolean
 }
@@ -108,7 +108,7 @@ const validationSchema = Yup.object({
     .max(255, "255文字以内で入力してください")
     .email("メールアドレスのフォーマットが正しくありません"),
   age: Yup.number().required("年齢を選択してください"),
-  job: Yup.string().required("希望職種を選択してください"),
+  jobId: Yup.string().required("希望職種を選択してください"),
   reason: Yup.string()
     .required("希望理由を入力してください")
     .max(3000, "希望理由は3,000文字以内で入力してください"),
@@ -126,14 +126,22 @@ export default function EntryPage() {
       name: values.name,
       email: values.email,
       age: values.age,
-      job: values.job,
+      jobId: values.jobId,
       reason: values.reason,
     }
     try {
       await apiRequests.addJobEntry(fields)
       setEntrySent(true)
     } catch (e) {
-      console.log(e)
+      if (e.response?.status === 400) {
+        window.alert(
+          "登録に失敗しました。入力値が正しいかどうかご確認ください。",
+        )
+      } else {
+        window.alert(
+          "登録に失敗しました。ネットワーク環境をご確認のうえ再度お試しください。",
+        )
+      }
     }
     // form.setSubmitting(false)
   }
@@ -143,7 +151,7 @@ export default function EntryPage() {
       name: "",
       email: "",
       age: 30,
-      job: "",
+      jobId: "",
       reason: "",
       policyAgreement: false,
     },
@@ -225,13 +233,16 @@ export default function EntryPage() {
               <FieldGroup
                 label="希望職種"
                 fieldId="job"
-                error={getErrorOf("job")}
+                error={getErrorOf("jobId")}
               >
                 <select
-                  id="job"
-                  name="job"
-                  css={[styles.select, hasError("job") && styles.inputErrored]}
-                  {...form.getFieldProps("job")}
+                  id="jobId"
+                  name="jobId"
+                  css={[
+                    styles.select,
+                    hasError("jobId") && styles.inputErrored,
+                  ]}
+                  {...form.getFieldProps("jobId")}
                 >
                   <option key="default" value="">
                     選択してください
