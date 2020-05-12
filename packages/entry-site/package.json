@@ -4,7 +4,7 @@
   "private": true,
   "license": "NOLICENSE",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && cp public/*.css ./dist/",
     "checks": "yarn typecheck && yarn lint",
     "start": "webpack-dev-server",
     "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",

@@ -20,5 +20,15 @@
       "host": "127.0.0.1",
       "port": "8090"
     }
-  }
+  },
+  "hosting": [
+    {
+      "target": "entry-site",
+      "public": "./packages/entry-site/dist"
+    },
+       {
+      "target": "admin-site",
+      "public": "./packages/entry-site/dist"
+    }
+  ]
 }

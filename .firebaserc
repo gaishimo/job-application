@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "etco-job-application": {
+      "hosting": {
+        "entry-site": [
+          "etco-job-application"
+        ],
+        "admin-site": [
+          "etco-job-application-admin"
+        ]
+      }
+    }
+  }
+}
