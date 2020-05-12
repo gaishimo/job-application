@@ -14,6 +14,12 @@ npm install -g yarn
 yarn install
 ```
 
+## Build
+
+```
+yarn build
+```
+
 
 ## Entry Site
 
@@ -27,11 +33,6 @@ cd packages/entry-site
 yarn start
 ```
 
-### Build
-
-```
-yarn build
-```
 
 ## functions
 
@@ -49,11 +50,6 @@ cp packages/functions/.env.sample packages/functions/.env
 yarn functions:config:set
 ```
 
-### Build
-
-```
-yarn build
-```
 
 ### Run Emulator
 
