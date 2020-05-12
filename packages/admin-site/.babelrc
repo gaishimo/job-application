@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", { "targets": { "node": true } }],
+      "@babel/preset-typescript",
+      "@emotion/babel-preset-css-prop"
+    ],
+  "env": {
+    "production": {
+      "plugins": [
+        "emotion"
+      ]
+    },
+    "development": {
+      "plugins": [["emotion", { "sourceMap": true }]]
+    }
+  }
+}
