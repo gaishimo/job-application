@@ -4,7 +4,7 @@
   "private": true,
   "license": "NOLICENSE",
   "scripts": {
-    "build": "webpack --mode production && cp public/*.css ./dist/",
+    "build": "webpack --color --progress --mode production",
     "checks": "yarn typecheck && yarn lint",
     "start": "webpack-dev-server",
     "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
@@ -33,6 +33,7 @@
     "@types/yup": "^0.28.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-emotion": "^10.0.33",
+    "copy-webpack-plugin": "^5.1.1",
     "dotenv": "^8.2.0",
     "html-webpack-plugin": "^4.3.0",
     "ts-loader": "^7.0.3",

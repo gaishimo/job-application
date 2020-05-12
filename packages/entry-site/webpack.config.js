@@ -1,6 +1,7 @@
 const webpack = require("webpack")
 const path = require("path")
 const HTMLPlugin = require("html-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin")
 require("dotenv").config()
 
 module.exports = {
@@ -19,6 +20,13 @@ module.exports = {
     new HTMLPlugin({
       template: path.join(__dirname, "public/index.html"),
     }),
+    new CopyPlugin([
+      {
+        from: "public/*.css",
+        to: ".",
+        flatten: true,
+      },
+    ]),
     new webpack.DefinePlugin({
       "process.env.APP_ENV": JSON.stringify(
         process.env.NODE_ENV || "development",
