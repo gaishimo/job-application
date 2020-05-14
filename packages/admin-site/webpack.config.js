@@ -31,8 +31,18 @@ module.exports = {
       "process.env.APP_ENV": JSON.stringify(
         process.env.NODE_ENV || "development",
       ),
-      "process.env.API_URL_ADD_JOB_ENTRY": JSON.stringify(
-        process.env.API_URL_ADD_JOB_ENTRY,
+      ...[
+        "FIREBASE_API_KEY",
+        "FIREBASE_AUTH_DOMAIN",
+        "FIREBASE_DATABASE_URL",
+        "FIREBASE_PROJECT_ID",
+        "FIREBASE_APP_ID",
+      ].reduce(
+        (o, key) => ({
+          ...o,
+          [`process.env.${key}`]: JSON.stringify(process.env[key]),
+        }),
+        {},
       ),
     }),
   ],
