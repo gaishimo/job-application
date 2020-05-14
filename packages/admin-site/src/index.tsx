@@ -1,5 +1,5 @@
-/** @jsx jsx */
+import React from "react"
 import ReactDOM from "react-dom"
-import { jsx } from "@emotion/core"
+import App from "./App"
 
-ReactDOM.render(<h1>応募管理サイト</h1>, document.getElementById("application"))
+ReactDOM.render(<App />, document.getElementById("application"))

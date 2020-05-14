@@ -24,7 +24,11 @@
   "hosting": [
     {
       "target": "entry-site",
-      "public": "./packages/entry-site/dist"
+      "public": "./packages/entry-site/dist",
+      "rewrites": [{
+        "source": "**",
+        "destination": "/index.html"
+      }]
     },
        {
       "target": "admin-site",

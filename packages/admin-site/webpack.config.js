@@ -40,5 +40,6 @@ module.exports = {
     host: "127.0.0.1",
     disableHostCheck: true,
     contentBase: path.resolve(__dirname, "public"),
+    historyApiFallback: true,
   },
 }
