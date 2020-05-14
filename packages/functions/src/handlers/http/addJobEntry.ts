@@ -10,6 +10,8 @@ import {
   generateJobEntryFromDB,
 } from "@etco-job-application/core"
 
+const JOB_ENTRY_COLLECTION_NAME = "jobEntries"
+
 const app = express()
 
 app.use(cors())
@@ -41,7 +43,7 @@ app.post("/", async (req, res) => {
   }
 
   const admin = getFirebaseAdminApp()
-  const newDoc = admin.firestore().collection("entries").doc()
+  const newDoc = admin.firestore().collection(JOB_ENTRY_COLLECTION_NAME).doc()
 
   try {
     await newDoc.set(jobEntry)
