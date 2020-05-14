@@ -1,5 +1,6 @@
 import React from "react"
+import Layout from "../../Layout"
 
 export default function LoginPage() {
-  return <h1>Login Page</h1>
+  return <Layout title="ログイン" />
 }

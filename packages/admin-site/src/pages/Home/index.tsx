@@ -1,5 +1,6 @@
 import React from "react"
+import Layout from "../../Layout"
 
 export default function HomePage() {
-  return <h1>Home Page</h1>
+  return <Layout title="応募一覧" showLogoutButton />
 }

@@ -11,7 +11,8 @@ body {
     sans-serif;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 1.7rem;
+  letter-spacing: 0.3rem;
 }
 
 a {
@@ -53,15 +54,18 @@ label {
   cursor: pointer;
 }
 
+button {
+  cursor: pointer;
+}
+
 button[type=submit] {
   background-color: #137cee;
   color: white;
   font-size: 0.9rem;
   border-radius: 30px;
   border-width: 0;
-  cursor: pointer;
 }
-button[type=submit]:focus {
+button:focus {
   outline: none;
 }
 button[type=submit]:disabled {
