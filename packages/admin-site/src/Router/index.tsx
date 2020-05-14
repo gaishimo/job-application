@@ -1,28 +1,27 @@
 import React from "react"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
-import Auth from "./Auth"
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
+import { useSelector } from "react-redux"
+import LoggedIn from "./LoggedIn"
 import * as Pages from "../pages"
+import { State } from "../store"
 
-type Props = {
-  user: firebase.User | null
-}
+export default function Router() {
+  const loggedIn = useSelector((state: State) => state.auth.loggedIn)
 
-export default function Router(props: Props) {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/login">
-          <Pages.Login />
+          {loggedIn ? <Redirect to="/" /> : <Pages.Login />}
         </Route>
-
-        <Auth loggedIn={props.user != null}>
+        <LoggedIn loggedIn={loggedIn}>
           <Route exact path="/">
             <Pages.Home />
           </Route>
           <Route exact path="/job-entries/:id">
             <Pages.JobEntry />
           </Route>
-        </Auth>
+        </LoggedIn>
         <Route>
           <Pages.NotFound />
         </Route>

@@ -3,10 +3,15 @@ import { css, jsx } from "@emotion/core"
 
 type Props = {
   title: string
+  onClick?: () => void
 }
 
 export default function TextButton(props: Props) {
-  return <button css={styles.button}>{props.title}</button>
+  return (
+    <button css={styles.button} onClick={props.onClick}>
+      {props.title}
+    </button>
+  )
 }
 
 const styles = {

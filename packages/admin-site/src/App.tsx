@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
+import { useDispatch, Provider as ReduxProvider } from "react-redux"
 import Router from "./Router"
-import {
-  initializeFirebaseApp,
-  getCurrentUser,
-  listenAuthState,
-} from "./libs/firebase"
+import { initializeFirebaseApp, checkIfLoggedIn } from "./libs/firebase"
+import { actions as authActions } from "./reduxModules/auth"
+import store from "./store"
 
 export default function App() {
+  const dispatch = useDispatch()
   const [ready, setReady] = useState<boolean>(false)
-  const [user, setUser] = useState<firebase.User | null>(null)
 
-  async function initialize() {
-    initializeFirebaseApp()
-    const currentUser = await getCurrentUser()
-    console.log("currentUser:", currentUser)
-    setUser(currentUser)
-
-    setReady(true)
-  }
+  const initialize = useCallback(() => {
+    ;(async function () {
+      initializeFirebaseApp()
+      const loggedIn = await checkIfLoggedIn()
+      dispatch(authActions.setLoggedIn(loggedIn))
+      setReady(true)
+    })()
+  }, [dispatch])
 
   useEffect(() => {
     initialize()
-    const unsubscribe = listenAuthState(user => {
-      setUser(user)
-    })
-    return () => {
-      unsubscribe()
-    }
-  }, [])
+  }, [initialize])
 
   if (!ready) return null
-  return <Router user={user} />
+
+  return (
+    <ReduxProvider store={store}>
+      <Router />
+    </ReduxProvider>
+  )
 }

@@ -6,6 +6,6 @@ type Props = {
   children: React.ReactNode
 }
 
-export default function Auth(props: Props) {
-  return props.loggedIn ? <>props.children</> : <Redirect to="/login" />
+export default function LoggedInGroup(props: Props) {
+  return props.loggedIn ? <>{props.children}</> : <Redirect to="/login" />
 }
