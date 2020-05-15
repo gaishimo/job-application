@@ -10,27 +10,46 @@ import { fetchJobEntries } from "../../libs/logics"
 const RECORD_PER_PAGE = 5
 
 export default function HomePage() {
+  const [searchText, setSearchText] = useState<string>("")
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [entries, setEntries] = useState<JobEntry[] | null>(null)
   const [endReached, setEndReached] = useState<boolean>(false)
 
   const entriesNum = (entries || []).length
   const isInLastPage = Math.ceil(entriesNum / RECORD_PER_PAGE) - 1 === pageIndex
+  console.log("isInLastPage:", isInLastPage)
+  console.log("endReached:", endReached)
 
   const start = RECORD_PER_PAGE * pageIndex
   const end = start + RECORD_PER_PAGE
   const nextable = !endReached || !isInLastPage
 
-  /**
-   * @return まだレコードがあるときはtrue, 最後に到達したらfalseを返す
-   **/
-  async function load(startAfterDocId: string | null = null) {
+  async function load(
+    startAfterDocId: string | null = null,
+    searchText: string = "",
+  ) {
     const { records, moreRecordsExist } = await fetchJobEntries(
       RECORD_PER_PAGE,
       startAfterDocId,
+      searchText,
     )
-    setEntries([...(entries || []), ...records])
+    if (startAfterDocId) {
+      setEntries([...(entries || []), ...records])
+    } else {
+      setEntries(records)
+    }
+
+    if (!moreRecordsExist) {
+      setEndReached(true)
+    }
+
     return moreRecordsExist
+  }
+
+  async function searchByText(text: string) {
+    setSearchText(text)
+    setEndReached(false)
+    load(null, text)
   }
 
   async function nextPage() {
@@ -43,11 +62,8 @@ export default function HomePage() {
     }
 
     const lastDoc = records[records.length - 1]
-    const moreRecordsExist = await load(lastDoc.id)
+    await load(lastDoc.id, searchText)
     setPageIndex(pageIndex + 1)
-    if (!moreRecordsExist) {
-      setEndReached(true)
-    }
   }
 
   function prevPage() {
@@ -63,7 +79,7 @@ export default function HomePage() {
     <Layout title="応募一覧" containerWidth={900} showLogoutButton>
       <div css={styles.container}>
         <div css={styles.search}>
-          <SearchBox onSearch={() => {}} />
+          <SearchBox onSearch={searchByText} />
         </div>
         <div css={styles.view}>
           {entries === null && <div>loading...</div>}

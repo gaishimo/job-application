@@ -4,10 +4,17 @@ import { JobEntry, generateJobEntryFromDB } from "@etco-job-application/core"
 export async function fetchJobEntries(
   limit: number,
   startAfterId: string | null,
+  searchText: string = "",
 ): Promise<{ records: JobEntry[]; moreRecordsExist: boolean }> {
   const collectionRef = firebase.firestore().collection("jobEntries")
-  const baseQuery = collectionRef.orderBy("entriedAt", "desc")
-  let searchQuery = baseQuery.limit(5)
+  const baseQuery =
+    searchText.trim().length > 0
+      ? collectionRef
+          .orderBy("name", "asc")
+          .startAt(searchText)
+          .endAt(searchText + "\uf8ff")
+      : collectionRef.orderBy("entriedAt", "desc")
+  let searchQuery = baseQuery.limit(limit)
   if (startAfterId) {
     const startAfterDoc = await collectionRef.doc(startAfterId).get()
     searchQuery = searchQuery.startAfter(startAfterDoc)
@@ -30,6 +37,7 @@ export async function fetchJobEntries(
   const additionalQuery = baseQuery.startAfter(lastDoc).limit(1)
   const additionalSnap = await additionalQuery.get()
   const moreRecordsExist = additionalSnap.docs.length > 0
+  console.log("moreRecordExist:", moreRecordsExist)
   return {
     records,
     moreRecordsExist,

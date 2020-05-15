@@ -14,6 +14,7 @@ export default function SearchBox(props: Props) {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    props.onSearch(input.value)
   }
 
   return (
