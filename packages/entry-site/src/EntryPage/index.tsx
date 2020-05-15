@@ -123,11 +123,11 @@ export default function EntryPage() {
 
   async function submit(values: Fields) {
     const fields = {
-      name: values.name,
-      email: values.email,
+      name: values.name.trim(),
+      email: values.email.trim(),
       age: parseInt(values.age, 10),
       jobId: values.jobId,
-      reason: values.reason,
+      reason: values.reason.trim(),
     }
     try {
       await apiRequests.addJobEntry(fields)
