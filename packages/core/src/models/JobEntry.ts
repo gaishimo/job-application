@@ -2,6 +2,7 @@ import * as yup from "yup"
 import * as firestore from "@google-cloud/firestore"
 import { Job, JOB_DATA } from "./Job"
 import { EntryStatus, ENTRY_STATUS_DATA } from "./EntryStatus"
+import { DocumentSnapshot } from "../db"
 
 export interface JobEntry {
   id?: string
@@ -46,9 +47,7 @@ export async function validateJobEntry(jobEntry: JobEntry): Promise<void> {
   await schema.validate(jobEntry)
 }
 
-export function generateJobEntryFromDB(
-  snapshot: firestore.DocumentSnapshot<firestore.DocumentData>,
-) {
+export function generateJobEntryFromDB(snapshot: DocumentSnapshot) {
   if (!snapshot.exists) throw new Error("no document")
   const data = snapshot.data() as FetchedJobEntry
   if (data == null) throw new Error("empty data")

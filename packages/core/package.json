@@ -12,6 +12,7 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"
   },
   "dependencies": {
+    "firebase": "^7.14.3",
     "yup": "^0.28.5"
   },
   "devDependencies": {}
