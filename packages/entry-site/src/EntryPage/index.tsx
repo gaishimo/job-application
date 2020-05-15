@@ -94,7 +94,7 @@ const styles = {
 type Fields = {
   name: string
   email: string
-  age: number
+  age: string
   jobId: string
   reason: string
   policyAgreement: boolean
@@ -125,7 +125,7 @@ export default function EntryPage() {
     const fields = {
       name: values.name,
       email: values.email,
-      age: values.age,
+      age: parseInt(values.age, 10),
       jobId: values.jobId,
       reason: values.reason,
     }
@@ -150,7 +150,7 @@ export default function EntryPage() {
     initialValues: {
       name: "",
       email: "",
-      age: 30,
+      age: "30",
       jobId: "",
       reason: "",
       policyAgreement: false,
