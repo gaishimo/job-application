@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 import { JobEntry } from "@etco-job-application/core"
 import ListItem from "./ListItem"
 import Layout from "../../Layout"
@@ -10,6 +11,7 @@ import { fetchJobEntries } from "../../libs/logics"
 const RECORD_PER_PAGE = 20
 
 export default function HomePage() {
+  const history = useHistory()
   const [searchText, setSearchText] = useState<string>("")
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [entries, setEntries] = useState<JobEntry[] | null>(null)
@@ -94,7 +96,11 @@ export default function HomePage() {
                 />
               </div>
               {(entries || []).slice(start, end).map((entry, i) => (
-                <ListItem key={i} entry={entry} onSelect={() => {}} />
+                <ListItem
+                  key={i}
+                  entry={entry}
+                  onSelect={() => history.push(`/job-entries/${entry.id}`)}
+                />
               ))}
               <div css={styles.dataFooter}>
                 {pageIndex > 0 ? (
