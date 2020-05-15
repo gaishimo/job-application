@@ -12,11 +12,12 @@ type Props = {
 const styles = {
   group: css({
     width: "100%",
-    marginBottom: 10,
+    marginBottom: 6,
   }),
   label: css({
     display: "block",
-    marginBottom: 10,
+    marginBottom: 6,
+    fontSize: "0.85rem",
   }),
   requiredMark: css({
     marginLeft: 4,
@@ -26,7 +27,7 @@ const styles = {
   error: css({
     marginTop: 8,
     fontSize: "0.9rem",
-    minHeight: 30,
+    minHeight: 24,
     color: "red",
   }),
 }

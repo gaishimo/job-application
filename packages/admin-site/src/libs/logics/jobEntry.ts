@@ -1,6 +1,13 @@
 import * as firebase from "firebase/app"
 import { JobEntry, generateJobEntryFromDB } from "@etco-job-application/core"
 
+export async function fetchJobEntry(id: string) {
+  const docRef = firebase.firestore().collection("jobEntries").doc(id)
+  const snap = await docRef.get()
+  if (!snap.exists) return null
+  return generateJobEntryFromDB(snap)
+}
+
 export async function fetchJobEntries(
   limit: number,
   startAfterId: string | null,

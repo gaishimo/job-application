@@ -1,6 +1,6 @@
 body {
   color: rgb(50, 50, 50);
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.4rem;
   letter-spacing: 0.3px;
   font-family: "Helvetica Neue",
@@ -21,7 +21,7 @@ a {
 
 input, textarea {
   color: #323232;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border: 1px solid #BEBEBE;
   padding: 12px;
   letter-spacing: 0.3px;
@@ -34,12 +34,13 @@ input:focus, textarea:focus, select:focus {
   border: 1px solid #137cee;
 }
 select {
-   font-size: 1rem;
+  font-size: 0.9rem;
   padding: 12px 20px;
   cursor: pointer;
   text-indent: 0.01px;
   text-overflow: ellipsis;
   border: 1px solid #BEBEBE;
+  border-radius: 6px;
   outline: none;
   box-shadow: none;
   -webkit-appearance: none;
@@ -55,14 +56,16 @@ label {
 }
 
 button {
+  background-color: white;
+  font-size: 0.9rem;
   cursor: pointer;
+  border: 1px solid black;
+  border-radius: 30px;
 }
 
 button[type=submit] {
   background-color: #137cee;
   color: white;
-  font-size: 0.9rem;
-  border-radius: 30px;
   border-width: 0;
 }
 button:focus {

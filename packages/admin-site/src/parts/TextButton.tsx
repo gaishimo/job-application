@@ -26,7 +26,7 @@ const styles = {
     padding: "6px 10px",
     backgroundColor: "transparent",
     color: "#3883C0",
-    fontSize: "1rem",
+    fontSize: "0.9rem",
     "&:hover": {
       fontWeight: "bold",
     },
