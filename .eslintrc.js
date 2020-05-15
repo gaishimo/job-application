@@ -31,7 +31,7 @@ module.exports = {
   rules: {
     "node/no-missing-import": "error",
     "no-empty": "off",
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "react/display-name": "off",
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
