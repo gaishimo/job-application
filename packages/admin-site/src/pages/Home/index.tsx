@@ -7,7 +7,7 @@ import Layout from "../../Layout"
 import { SearchBox, TextButton } from "../../parts"
 import { fetchJobEntries } from "../../libs/logics"
 
-const RECORD_PER_PAGE = 5
+const RECORD_PER_PAGE = 20
 
 export default function HomePage() {
   const [searchText, setSearchText] = useState<string>("")
@@ -138,7 +138,9 @@ const styles = {
     marginTop: 80,
     textAlign: "center",
   }),
-  data: css({}),
+  data: css({
+    paddingBottom: 50,
+  }),
   dataHeader: css({
     padding: "6px 0",
     display: "flex",
