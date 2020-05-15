@@ -9,11 +9,19 @@ export async function checkIfLoggedIn() {
   return user != null && !user.isAnonymous
 }
 
+export async function mustGetCurrentUser(): Promise<firebase.User> {
+  const user = await getCurrentUser()
+  if (user == null) {
+    throw new Error("not_logged_in")
+  }
+  return user
+}
+
 export async function getCurrentUser(): Promise<firebase.User | null> {
   return new Promise(resolve => {
     const timeout = setTimeout(() => {
       resolve(null)
-    }, 3000)
+    }, 1000)
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       clearTimeout(timeout)
       unsubscribe()

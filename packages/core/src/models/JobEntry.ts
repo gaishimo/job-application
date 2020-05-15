@@ -6,15 +6,16 @@ import { DocumentSnapshot } from "../db"
 
 export interface JobEntry {
   id?: string
+  no: number
   name: string
   email: string
   age: number
   jobId: string
   reason: string
   status: string
-  memo?: string | null
-  entriedAt?: Date
-  updatedAt?: Date
+  memo: string | null
+  entriedAt: Date
+  updatedAt: Date
 }
 interface _JobEntry extends JobEntry {
   entriedAt: any
@@ -27,6 +28,7 @@ interface FetchedJobEntry extends _JobEntry {
 
 const schema = yup.object().shape({
   name: yup.string().required().max(50),
+  no: yup.number().typeError().required().min(1),
   email: yup.string().required().email().max(255),
   age: yup.number().typeError().required().min(1).max(100),
   jobId: yup
@@ -53,6 +55,7 @@ export function generateJobEntryFromDB(snapshot: DocumentSnapshot) {
   if (data == null) throw new Error("empty data")
   return {
     id: snapshot.id,
+    no: data.no,
     name: data.name,
     email: data.email,
     age: data.age,

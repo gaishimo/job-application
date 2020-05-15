@@ -23,6 +23,7 @@ app.post("/", async (req, res) => {
   const body = req.body as Api.AddJobEntry.RequestBody
 
   const jobEntry = {
+    no: 1, // dummy
     name: body.name,
     email: body.email,
     age: body.age,
@@ -44,9 +45,12 @@ app.post("/", async (req, res) => {
 
   const admin = getFirebaseAdminApp()
   const newDoc = admin.firestore().collection(JOB_ENTRY_COLLECTION_NAME).doc()
-
+  const no = await getNumberWithIncrement()
   try {
-    await newDoc.set(jobEntry)
+    await newDoc.set({
+      ...jobEntry,
+      no,
+    })
     console.log("new entry record saved.")
   } catch (e) {
     res.status(500).send({ error: e.message })
@@ -144,6 +148,19 @@ function mailBodyForAdmin(jobEntry: JobEntry) {
     "",
     "◯◯社人事部",
   ].join("\n")
+}
+
+async function getNumberWithIncrement(): Promise<number> {
+  const admin = getFirebaseAdminApp()
+  const docRef = admin.firestore().collection("counters").doc("jobEntry")
+  const snap = await docRef.get()
+  if (!snap.exists) {
+    await docRef.set({ count: 1 })
+    return 1
+  }
+  await docRef.update({ count: admin.firestore.FieldValue.increment(1) })
+  const countSnap = await docRef.get()
+  return countSnap.data()?.count
 }
 
 export default app

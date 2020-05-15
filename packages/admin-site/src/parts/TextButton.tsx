@@ -1,14 +1,19 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
+import { SerializedStyles } from "@emotion/serialize"
 
 type Props = {
   title: string
+  styles?: SerializedStyles[]
   onClick?: () => void
 }
 
 export default function TextButton(props: Props) {
   return (
-    <button css={styles.button} onClick={props.onClick}>
+    <button
+      css={[styles.button, ...(props.styles || [])]}
+      onClick={props.onClick}
+    >
       {props.title}
     </button>
   )
