@@ -11,7 +11,7 @@ type Props = {
 export default function ListItem(props: Props) {
   const entry = props.entry
   return (
-    <li css={styles.listItem}>
+    <li css={styles.listItem} onClick={props.onSelect}>
       <div css={[styles.field, css({ textAlign: "right" })]}>{entry.no}</div>
       <div css={[styles.field, css({ minWidth: 80 })]}>{entry.name}</div>
       <div css={[styles.field, css({ minWidth: 80 })]}>{entry.email}</div>
@@ -23,7 +23,9 @@ export default function ListItem(props: Props) {
       </div>
       <div css={styles.field}>{entry.age}歳</div>
       <div css={styles.field}>
-        {entry.entriedAt ? formatDate(entry.entriedAt, "yyyy年MM月dd日") : ""}
+        {entry.entriedAt
+          ? formatDate(entry.entriedAt, "yyyy年MM月dd日 HH時mm分")
+          : ""}
       </div>
     </li>
   )
