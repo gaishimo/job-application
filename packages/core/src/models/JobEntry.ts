@@ -28,7 +28,7 @@ interface FetchedJobEntry extends _JobEntry {
 const schema = yup.object().shape({
   name: yup.string().required().max(50),
   email: yup.string().required().email().max(255),
-  age: yup.number().required().min(1).max(100),
+  age: yup.number().typeError().required().min(1).max(100),
   jobId: yup
     .string()
     .required()
@@ -39,8 +39,8 @@ const schema = yup.object().shape({
     .required()
     .oneOf(ENTRY_STATUS_DATA.map(d => d.id)),
   memo: yup.string().nullable().max(3000),
-  entriedAt: yup.date(),
-  updatedAt: yup.date(),
+  entriedAt: yup.date().typeError(),
+  updatedAt: yup.date().typeError(),
 })
 
 export async function validateJobEntry(jobEntry: JobEntry): Promise<void> {
