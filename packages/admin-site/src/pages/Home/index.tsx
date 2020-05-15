@@ -17,8 +17,6 @@ export default function HomePage() {
 
   const entriesNum = (entries || []).length
   const isInLastPage = Math.ceil(entriesNum / RECORD_PER_PAGE) - 1 === pageIndex
-  console.log("isInLastPage:", isInLastPage)
-  console.log("endReached:", endReached)
 
   const start = RECORD_PER_PAGE * pageIndex
   const end = start + RECORD_PER_PAGE

@@ -37,7 +37,6 @@ export async function fetchJobEntries(
   const additionalQuery = baseQuery.startAfter(lastDoc).limit(1)
   const additionalSnap = await additionalQuery.get()
   const moreRecordsExist = additionalSnap.docs.length > 0
-  console.log("moreRecordExist:", moreRecordsExist)
   return {
     records,
     moreRecordsExist,
