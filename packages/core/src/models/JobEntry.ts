@@ -9,9 +9,9 @@ export interface JobEntry {
   name: string
   email: string
   age: number
-  jobId: Job["id"]
+  jobId: string
   reason: string
-  status: EntryStatus["id"]
+  status: string
   memo?: string | null
   entriedAt?: Date
   updatedAt?: Date

@@ -3,7 +3,7 @@ export type EntryStatus = {
   name: string
 }
 
-export const ENTRY_STATUS_IDS = {
+export const ENTRY_STATUS_IDS: { [key: string]: string } = {
   waiting: "waiting",
   inProgress: "inProgress",
   done: "done",
