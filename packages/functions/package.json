@@ -21,7 +21,7 @@
     "config:set": "firebase functions:config:set --project $npm_config_fr_project_id sendgrid.api_key=$npm_config_sendgrid_api_key notification_mail.from=$npm_config_notification_mail_from notification_mail.to=$npm_config_notification_mail_to"
   },
   "dependencies": {
-    "@etco-job-application/core": "file:core",
+    "@etco-job-application/core": "0.0.0",
     "@google-cloud/firestore": "^3.7.5",
     "@sendgrid/mail": "^7.1.0",
     "cors": "^2.8.5",
