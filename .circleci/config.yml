@@ -25,6 +25,20 @@ workflows:
           filters:
             branches:
               only: release/functions
+
+  deploy_entry_site:
+    jobs:
+      - deploy_entry_site:
+          filters:
+            branches:
+              only: release/entry-site
+
+  deploy_admin_site:
+    jobs:
+      - deploy_admin_site:
+          filters:
+            branches:
+              only: release/admin-site
   
 jobs:
   check_and_build:
@@ -38,18 +52,33 @@ jobs:
   deploy_functions:
     executor: node
     steps:
-      - checkout
-      - run:
-          name: Prepare .npmrc
-          command: 'echo $NPMRC | base64 -di > .npmrc'
-      - build_and_check
+      - prepare_for_deploy
       - run:
           name: Deploy Functions
           command: "yarn deploy:functions"
       - slack/status:
           fail_only: false
           webhook: '${SLACK_WEBHOOK}'
-
+  deploy_entry_site:
+    executor: node
+    steps:
+      - prepare_for_deploy
+      - run:
+          name: Deploy entry-site
+          command: "yarn deploy:hosting:entry-site"
+      - slack/status:
+          fail_only: false
+          webhook: '${SLACK_WEBHOOK}'
+  deploy_admin_site:
+    executor: node
+    steps:
+      - prepare_for_deploy
+      - run:
+          name: Deploy admin-site
+          command: "yarn deploy:hosting:admin-site"
+      - slack/status:
+          fail_only: false
+          webhook: '${SLACK_WEBHOOK}'
 
 commands:
   build_and_check:
@@ -64,3 +93,10 @@ commands:
             - node_modules
       - run: yarn build
       - run: yarn checks
+  prepare_for_deploy:
+    steps:
+      - checkout
+      - run:
+          name: Prepare .npmrc
+          command: 'echo $NPMRC | base64 -di > .npmrc'
+      - build_and_check
