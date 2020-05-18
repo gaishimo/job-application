@@ -4,9 +4,10 @@
   "private": true,
   "license": "NOLICENSE",
   "scripts": {
-    "build": "webpack --color --progress --mode production",
+    "build": "NODE_ENV=production webpack --color --progress --mode production",
     "checks": "yarn typecheck && yarn lint",
     "start": "webpack-dev-server",
+    "deploy": "firebase deploy --only hosting:entry-site --project $npm_config_fr_project_id",
     "typecheck": "../../node_modules/.bin/tsc -p . --noEmit",
     "lint": "../../node_modules/.bin/eslint '**/*.ts{,x}'",
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'"

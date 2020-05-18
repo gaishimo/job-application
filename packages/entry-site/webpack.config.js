@@ -2,7 +2,18 @@ const webpack = require("webpack")
 const path = require("path")
 const HTMLPlugin = require("html-webpack-plugin")
 const CopyPlugin = require("copy-webpack-plugin")
-require("dotenv").config()
+
+const envDefinition = {
+  "process.env.app_env": JSON.stringify(process.env.NODE_ENV || "development"),
+  ...["api_url_add_job_entry"].reduce(
+    (o, key) => ({
+      ...o,
+      [`process.env.${key}`]: JSON.stringify(process.env[`npm_config_${key}`]),
+    }),
+    {},
+  ),
+}
+console.log(envDefinition)
 
 module.exports = {
   module: {
@@ -27,14 +38,7 @@ module.exports = {
         flatten: true,
       },
     ]),
-    new webpack.DefinePlugin({
-      "process.env.APP_ENV": JSON.stringify(
-        process.env.NODE_ENV || "development",
-      ),
-      "process.env.API_URL_ADD_JOB_ENTRY": JSON.stringify(
-        process.env.API_URL_ADD_JOB_ENTRY,
-      ),
-    }),
+    new webpack.DefinePlugin(envDefinition),
   ],
   devServer: {
     host: "127.0.0.1",

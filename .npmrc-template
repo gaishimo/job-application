@@ -3,3 +3,4 @@ fr_auth_domain=xxxxx.firebaseapp.com
 fr_database_url=https://xxxxx.firebaseio.com
 fr_project_id=xxxxx
 fr_app_id=xxxxx
+api_url_add_job_entry=https://xxxxx.cloudfunctions.net/addJobEntry
