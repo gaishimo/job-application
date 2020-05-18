@@ -12,7 +12,7 @@ import {
   setAuthPersistence,
 } from "./libs/firebase"
 import { actions as authActions } from "./reduxModules/auth"
-import store, { State } from "./store"
+import store from "./store"
 
 export default function App() {
   const dispatch = useDispatch()
