@@ -9,18 +9,19 @@ import {
   initializeFirebaseApp,
   checkIfLoggedIn,
   listenAuthState,
+  setAuthPersistence,
 } from "./libs/firebase"
 import { actions as authActions } from "./reduxModules/auth"
 import store, { State } from "./store"
 
 export default function App() {
   const dispatch = useDispatch()
-  const loggedIn = useSelector((state: State) => state.auth.loggedIn)
   const [ready, setReady] = useState<boolean>(false)
 
   const initialize = useCallback(() => {
     ;(async function () {
       initializeFirebaseApp()
+      await setAuthPersistence()
       const loggedIn = await checkIfLoggedIn()
       dispatch(authActions.setLoggedIn(loggedIn))
       setReady(true)
