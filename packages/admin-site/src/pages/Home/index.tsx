@@ -90,7 +90,11 @@ export default function HomePage() {
         <div css={styles.view}>
           {entries === null && <div>loading...</div>}
           {entries && entries.length === 0 && (
-            <div css={styles.noRecord}>まだ応募がありません。</div>
+            <div css={styles.noRecord}>
+              {searchText.length > 0
+                ? "応募が存在しません。"
+                : "まだ応募がありません。"}
+            </div>
           )}
           {entriesNum > 0 && (
             <div css={styles.data}>
@@ -149,6 +153,7 @@ const styles = {
   noRecord: css({
     marginTop: 80,
     textAlign: "center",
+    fontSize: "1rem",
   }),
   data: css({
     paddingBottom: 50,
