@@ -2,14 +2,45 @@
 import { css, jsx } from "@emotion/core"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { CSVLink } from "react-csv"
+import { ClipLoader } from "react-spinners"
 import { JobEntry } from "@etco-job-application/core"
 import ListItem from "./ListItem"
 import Layout from "../../Layout"
 import { SearchBox, TextButton } from "../../parts"
-import { fetchJobEntries } from "../../libs/logics"
+import { fetchJobEntries, loadAllJobEntries } from "../../libs/logics"
 import { useQuery } from "../../libs/hooks"
+import { formatDate } from "../../utils/date"
 
 const RECORD_PER_PAGE = 20
+
+// const header = [
+//   "id",
+//   "no",
+//   "name",
+//   "email",
+//   "age",
+//   "jobId",
+//   "reason",
+//   "status",
+//   "memo",
+//   "entriedAt",
+//   "updatedAt",
+// ]
+
+const CSV_HEADERS = [
+  { label: "No.", key: "no" },
+  { label: "ID", key: "id" },
+  { label: "名前", key: "name" },
+  { label: "メールアドレス", key: "email" },
+  { label: "年齢", key: "age" },
+  { label: "職種", key: "jobId" },
+  { label: "理由", key: "reason" },
+  { label: "ステータス", key: "status" },
+  { label: "メモ", key: "memo" },
+  { label: "エントリー日時", key: "entriedAt" },
+  { label: "最終更新日時", key: "updatedAt" },
+]
 
 export default function HomePage() {
   const history = useHistory()
@@ -18,6 +49,10 @@ export default function HomePage() {
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [entries, setEntries] = useState<JobEntry[] | null>(null)
   const [endReached, setEndReached] = useState<boolean>(false)
+  const [csvDownloadStatus, setCsvDownloadStatus] = useState<
+    "notReady" | "downloading" | "ready"
+  >("notReady")
+  const [csvData, setCsvData] = useState<object[] | null>(null)
 
   const entriesNum = (entries || []).length
   const isInLastPage = Math.ceil(entriesNum / RECORD_PER_PAGE) - 1 === pageIndex
@@ -74,6 +109,19 @@ export default function HomePage() {
     setPageIndex(pageIndex - 1)
   }
 
+  async function prepareCsv() {
+    setCsvDownloadStatus("downloading")
+    const jobEntries = await loadAllJobEntries()
+    setCsvData(
+      jobEntries.map(entry => ({
+        ...entry,
+        entriedAt: formatDate(entry.entriedAt, "yyyy/MM/dd hh:mm:ss"),
+        updatedAt: formatDate(entry.updatedAt, "yyyy/MM/dd hh:mm:ss"),
+      })),
+    )
+    setCsvDownloadStatus("ready")
+  }
+
   useEffect(() => {
     load(null, query.get("query") || "")
   }, [])
@@ -99,11 +147,33 @@ export default function HomePage() {
           {entriesNum > 0 && (
             <div css={styles.data}>
               <div css={styles.dataHeader}>
-                <TextButton
-                  styles={[styles.textButton]}
-                  title="CSVダウンロード"
-                  onClick={() => {}}
-                />
+                {csvDownloadStatus === "notReady" && (
+                  <TextButton
+                    styles={[styles.textButton]}
+                    title="CSVダウンロード"
+                    onClick={prepareCsv}
+                  />
+                )}
+                {csvDownloadStatus === "downloading" && (
+                  <div css={styles.downloading}>
+                    <ClipLoader size={20} color={"#007AFF"} />
+                  </div>
+                )}
+                {csvDownloadStatus === "ready" && (
+                  <CSVLink
+                    filename="job-entries.csv"
+                    headers={CSV_HEADERS}
+                    data={csvData || []}
+                    css={styles.csvLink}
+                    onClick={() => {
+                      setTimeout(() => {
+                        setCsvDownloadStatus("notReady")
+                      }, 1000)
+                    }}
+                  >
+                    ダウンロード準備完了
+                  </CSVLink>
+                )}
               </div>
               {(entries || []).slice(start, end).map((entry, i) => (
                 <ListItem
@@ -159,9 +229,16 @@ const styles = {
     paddingBottom: 50,
   }),
   dataHeader: css({
+    minHeight: 30,
     padding: "6px 0",
     display: "flex",
     justifyContent: "flex-end",
+  }),
+  downloading: css({
+    paddingRight: 30,
+  }),
+  csvLink: css({
+    color: "#137cee",
   }),
   dataFooter: css({
     padding: "6px 0",

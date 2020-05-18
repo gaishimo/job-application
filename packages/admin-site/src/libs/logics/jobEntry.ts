@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app"
 import { JobEntry, generateJobEntryFromDB } from "@etco-job-application/core"
+import { formatDate } from "../../utils/date"
 
 export async function fetchJobEntry(id: string) {
   const docRef = firebase.firestore().collection("jobEntries").doc(id)
@@ -71,4 +72,17 @@ export async function updateJobEntry(
 export async function deleteJobEntry(id: string) {
   const docRef = firebase.firestore().collection("jobEntries").doc(id)
   await docRef.delete()
+}
+
+export async function loadAllJobEntries() {
+  const snap = await firebase
+    .firestore()
+    .collection("jobEntries")
+    .orderBy("entriedAt", "desc")
+    .get()
+  const records: JobEntry[] = []
+  snap.forEach(doc => {
+    records.push(generateJobEntryFromDB(doc))
+  })
+  return records
 }
