@@ -16,7 +16,7 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "./bin/updatePackageJson.sh",
-    "deploy": "firebase deploy --only functions --project $npm_config_fr_project_id; ./bin/rollbackPackageJson.sh",
+    "deploy": "firebase deploy --only functions --project $npm_config_fr_project_id; RET=`echo $?`; ./bin/rollbackPackageJson.sh; exit $RET",
     "config:get": "firebase functions:config:get --project $npm_config_fr_project_id",
     "config:set": "firebase functions:config:set --project $npm_config_fr_project_id sendgrid.api_key=$npm_config_sendgrid_api_key notification_mail.from=$npm_config_notification_mail_from notification_mail.to=$npm_config_notification_mail_to"
   },
