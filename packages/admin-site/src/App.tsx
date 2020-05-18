@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react"
-import { useRecoilState } from "recoil"
+import React, { useEffect, useCallback } from "react"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import Router from "./Router"
 import {
   initializeFirebaseApp,
@@ -7,11 +7,11 @@ import {
   listenAuthState,
   setAuthPersistence,
 } from "./libs/firebase"
-import { authState } from "./states"
+import { authState, appReadyState } from "./states"
 
 export default function App() {
   const [, setLoggedIn] = useRecoilState(authState)
-  const [ready, setReady] = useState<boolean>(false)
+  const setAppReadyState = useSetRecoilState(appReadyState)
 
   const initialize = useCallback(() => {
     ;(async function () {
@@ -19,7 +19,7 @@ export default function App() {
       await setAuthPersistence()
       const loggedIn = await checkIfLoggedIn()
       setLoggedIn(loggedIn)
-      setReady(true)
+      setAppReadyState(true)
     })()
   }, [])
 
@@ -35,8 +35,6 @@ export default function App() {
       stopListeningAuthState()
     }
   }, [])
-
-  if (!ready) return null
 
   return <Router />
 }

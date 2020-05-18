@@ -3,11 +3,13 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import LoggedIn from "./LoggedIn"
 import * as Pages from "../pages"
-import { authState } from "../states"
+import { authState, appReadyState } from "../states"
 
 export default function Router() {
+  const appReady = useRecoilValue(appReadyState)
   const loggedIn = useRecoilValue(authState)
 
+  if (!appReady) return null
   return (
     <BrowserRouter>
       <Switch>
