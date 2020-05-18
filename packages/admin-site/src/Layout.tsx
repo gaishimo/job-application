@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core"
 import { useHistory } from "react-router-dom"
 import { SerializedStyles } from "@emotion/serialize"
-import { useRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { TextButton } from "./parts"
 import { signOut } from "./libs/firebase"
 import { authState } from "./states"
@@ -19,7 +19,7 @@ type Props = {
 
 export default function Layout(props: Props) {
   const history = useHistory()
-  const [, setLoggedIn] = useRecoilState(authState)
+  const setLoggedIn = useSetRecoilState(authState)
 
   async function signOutWithMessage() {
     console.log("signOutWithMessage()")

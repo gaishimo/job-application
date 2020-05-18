@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core"
 import { useState, FormEvent, useCallback } from "react"
 import BarLoader from "react-spinners/BarLoader"
-import { useRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import Layout from "../../Layout"
 import { FieldGroup } from "../../parts"
 import { authState } from "../../states"
@@ -10,7 +10,7 @@ import { useControlledInput } from "../../libs/hooks"
 import { signInWithEmail } from "../../libs/firebase"
 
 export default function LoginPage() {
-  const [, setLoggedIn] = useRecoilState(authState)
+  const setLoggedIn = useSetRecoilState(authState)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [error, setError] = useState<string | null>("")
 
