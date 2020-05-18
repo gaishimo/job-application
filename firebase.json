@@ -32,7 +32,11 @@
     },
        {
       "target": "admin-site",
-      "public": "./packages/entry-site/dist"
+      "public": "./packages/admin-site/dist",
+      "rewrites": [{
+        "source": "**",
+        "destination": "/index.html"
+      }]
     }
   ]
 }
