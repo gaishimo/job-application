@@ -1,9 +1,8 @@
 {
   "functions": {
     "source": "./packages/functions/",
-    "predeploy": "cd packages/functions; yarn predeploy",
-    "postdeploy": "cd packages/functions; yarn postdeploy"
-  },
+    "predeploy": "cd packages/functions; yarn predeploy"
+   },
   "firestore": {
     "rules": "./firebase/firestore.rules" 
   },

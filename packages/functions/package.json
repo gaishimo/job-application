@@ -16,12 +16,12 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predeploy": "./bin/updatePackageJson.sh",
-    "postdeploy": "./bin/rollbackPackageJson.sh",
-    "functions:config:get": "export $(cat .env | xargs) && firebase functions:config:get --project $PROJECT_ID",
-    "functions:config:set": "export $(cat .env | xargs) && firebase functions:config:set --project ${PROJECT_ID} sendgrid.api_key=${SENDGRID_API_KEY} notification_mail.from=${NOTIFICATION_MAIL_FROM} notification_mail.to=${NOTIFICATION_MAIL_TO}"
+    "deploy": "firebase deploy --only functions --project $npm_config_fr_project_id; ./bin/rollbackPackageJson.sh",
+    "config:get": "firebase functions:config:get --project $npm_config_fr_project_id",
+    "config:set": "firebase functions:config:set --project $npm_config_fr_project_id sendgrid.api_key=$npm_config_sendgrid_api_key notification_mail.from=$npm_config_notification_mail_from notification_mail.to=$npm_config_notification_mail_to"
   },
   "dependencies": {
-    "@etco-job-application/core": "0.0.0",
+    "@etco-job-application/core": "file:core",
     "@google-cloud/firestore": "^3.7.5",
     "@sendgrid/mail": "^7.1.0",
     "cors": "^2.8.5",
