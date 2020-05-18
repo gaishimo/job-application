@@ -77,10 +77,6 @@ export default function JobApplicationPage() {
     if (fetchedJobEntry == null) return false
     const fetched = fetchedJobEntry as any
     return Object.entries(form.values).some(([key, value]) => {
-      console.log(
-        `key: ${key} a: [${fetched[key] || ""}], b: [${value}]`,
-        fetched[key] !== value,
-      )
       return `${fetched[key] || ""}` !== `${value}`
     })
   }
