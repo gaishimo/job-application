@@ -12,3 +12,5 @@ dist/
 
 package.temp.json
 .runtimeconfig.json
+
+.npmrc

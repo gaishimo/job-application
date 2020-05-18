@@ -17,6 +17,7 @@
     "emulator": "firebase emulators:start --project ${PROJECT_ID}",
     "preemulator": "export $(cat packages/functions/.env | xargs) && firebase functions:config:get --project $PROJECT_ID > .runtimeconfig.json",
     "functions:config:set": "cd packages/functions; yarn functions:config:set",
+    "deploy:hosting:admin-site": "firebase deploy --only hosting:admin-site --project $PROJECT_ID",
     "deploy:hosting:entry-site": "firebase deploy --only hosting:entry-site --project $PROJECT_ID",
     "deploy:functions": "firebase deploy --only functions --project ${PROJECT_ID}",
     "deploy:firestore-rules": "firebase deploy --only firestore:rules --project ${PROJECT_ID}"

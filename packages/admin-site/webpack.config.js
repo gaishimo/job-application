@@ -2,7 +2,24 @@ const webpack = require("webpack")
 const path = require("path")
 const HTMLPlugin = require("html-webpack-plugin")
 const CopyPlugin = require("copy-webpack-plugin")
-require("dotenv").config()
+
+const envDefine = {
+  "process.env.app_env": JSON.stringify(process.env.NODE_ENV || "development"),
+  ...[
+    "fr_api_key",
+    "fr_auth_domain",
+    "fr_database_url",
+    "fr_project_id",
+    "fr_app_id",
+  ].reduce(
+    (o, key) => ({
+      ...o,
+      [`process.env.${key}`]: JSON.stringify(process.env[`npm_config_${key}`]),
+    }),
+    {},
+  ),
+}
+console.log(envDefine)
 
 module.exports = {
   module: {
@@ -27,24 +44,7 @@ module.exports = {
         flatten: true,
       },
     ]),
-    new webpack.DefinePlugin({
-      "process.env.APP_ENV": JSON.stringify(
-        process.env.NODE_ENV || "development",
-      ),
-      ...[
-        "FIREBASE_API_KEY",
-        "FIREBASE_AUTH_DOMAIN",
-        "FIREBASE_DATABASE_URL",
-        "FIREBASE_PROJECT_ID",
-        "FIREBASE_APP_ID",
-      ].reduce(
-        (o, key) => ({
-          ...o,
-          [`process.env.${key}`]: JSON.stringify(process.env[key]),
-        }),
-        {},
-      ),
-    }),
+    new webpack.DefinePlugin(envDefine),
   ],
   devServer: {
     host: "127.0.0.1",
