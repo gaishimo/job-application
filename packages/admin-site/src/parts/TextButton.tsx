@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import { SerializedStyles } from "@emotion/serialize"
+import { Colors } from "../values"
 
 type Props = {
   title: string
@@ -25,7 +26,7 @@ const styles = {
     cursor: "pointer",
     padding: "6px 10px",
     backgroundColor: "transparent",
-    color: "#3883C0",
+    color: Colors.moderateBlue,
     fontSize: "0.9rem",
     "&:hover": {
       fontWeight: "bold",

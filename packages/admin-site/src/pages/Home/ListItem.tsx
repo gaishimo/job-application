@@ -2,6 +2,7 @@
 import { css, jsx } from "@emotion/core"
 import { JobEntry, getJobName, getStatusName } from "@etco-job-application/core"
 import { formatDate } from "../../utils/date"
+import { Colors } from "../../values"
 
 type Props = {
   entry: JobEntry
@@ -35,7 +36,7 @@ const styles = {
   listItem: css({
     minWidth: 40,
     marginBottom: 8,
-    border: "1px solid #D8D8D8",
+    border: `1px solid ${Colors.lightGrey}`,
     borderRadius: 4,
     padding: "18px 16px",
     display: "flex",
@@ -44,7 +45,7 @@ const styles = {
     alignItems: "center",
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: "#F8F8FC",
+      backgroundColor: Colors.mostlyWhite2,
     },
   }),
   field: css({

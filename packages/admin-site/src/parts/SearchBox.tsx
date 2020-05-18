@@ -4,6 +4,7 @@ import { FormEvent } from "react"
 import { IconContext } from "react-icons"
 import { GoSearch } from "react-icons/go"
 import { useControlledInput } from "../libs/hooks"
+import { Colors } from "../values"
 
 type Props = {
   initialValue: string
@@ -22,7 +23,9 @@ export default function SearchBox(props: Props) {
     <form onSubmit={onSubmit}>
       <div css={styles.box}>
         <input type="search" css={styles.input} {...input} />
-        <IconContext.Provider value={{ color: "#787878", size: "1.2rem" }}>
+        <IconContext.Provider
+          value={{ color: Colors.darkGrey, size: "1.2rem" }}
+        >
           <GoSearch css={styles.icon} />
         </IconContext.Provider>
       </div>
@@ -37,13 +40,13 @@ const styles = {
   input: css({
     width: 360,
     height: 42,
-    backgroundColor: "#FCFCFC",
-    border: "1px solid #D8D8D8",
+    backgroundColor: Colors.mostelyWhite,
+    border: `1px solid ${Colors.lightGrey}`,
     borderRadius: 30,
     position: "relative",
     padding: "4px 20px 4px 40px",
     fontSize: "1rem",
-    color: "#323232",
+    color: Colors.veryDarkGrey,
     letterSpacing: "0.1rem",
   }),
   icon: css({

@@ -21,6 +21,7 @@ import {
   deleteJobEntry,
 } from "../../libs/logics"
 import { formatDate } from "../../utils/date"
+import { Colors } from "../../values"
 
 type Fields = {
   name: string
@@ -310,7 +311,7 @@ export default function JobApplicationPage() {
                     height={6}
                     width={100}
                     css={styles.progressBar}
-                    color={"#D0021B"}
+                    color={Colors.danger}
                   />
                 ) : (
                   <button
@@ -327,7 +328,7 @@ export default function JobApplicationPage() {
                     height={6}
                     width={100}
                     css={styles.progressBar}
-                    color={"#007AFF"}
+                    color={Colors.primary}
                   />
                 ) : (
                   <button
@@ -386,7 +387,7 @@ const styles = {
   }),
   select: css({
     width: "100%",
-    backgroundColor: "rgb(252, 252, 252)",
+    backgroundColor: Colors.mostelyWhite,
   }),
   textValue: css({
     paddingLeft: 20,
@@ -402,8 +403,8 @@ const styles = {
     padding: "8px 20px",
   }),
   delete: css({
-    borderColor: "#D0021B",
-    color: "#D0021B",
+    borderColor: Colors.danger,
+    color: Colors.danger,
     "&:disabled": {
       opacity: 0.4,
     },

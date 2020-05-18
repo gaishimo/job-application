@@ -11,6 +11,7 @@ import { SearchBox, TextButton } from "../../parts"
 import { fetchJobEntries, loadAllJobEntries } from "../../libs/logics"
 import { useQuery } from "../../libs/hooks"
 import { formatDate } from "../../utils/date"
+import { Colors } from "../../values"
 
 const RECORD_PER_PAGE = 20
 
@@ -124,7 +125,7 @@ export default function HomePage() {
         <div css={styles.view}>
           {entries === null && (
             <div css={styles.dataLoader}>
-              <BeatLoader color={"#137cee"} size={10} margin={2} />
+              <BeatLoader color={Colors.primary} size={10} margin={2} />
             </div>
           )}
           {entries && entries.length === 0 && (
@@ -146,7 +147,7 @@ export default function HomePage() {
                 )}
                 {csvDownloadStatus === "downloading" && (
                   <div css={styles.downloading}>
-                    <ClipLoader size={20} color={"#007AFF"} />
+                    <ClipLoader size={20} color={Colors.primary} />
                   </div>
                 )}
                 {csvDownloadStatus === "ready" && (
@@ -231,7 +232,7 @@ const styles = {
     paddingRight: 30,
   }),
   csvLink: css({
-    color: "#137cee",
+    color: Colors.primary,
   }),
   dataFooter: css({
     padding: "6px 0",

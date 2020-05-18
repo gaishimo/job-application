@@ -8,6 +8,7 @@ import { FieldGroup } from "../../parts"
 import { authState } from "../../states"
 import { useControlledInput } from "../../libs/hooks"
 import { signInWithEmail } from "../../libs/firebase"
+import { Colors } from "../../values"
 
 export default function LoginPage() {
   const setLoggedIn = useSetRecoilState(authState)
@@ -79,7 +80,7 @@ export default function LoginPage() {
           <div css={styles.errorMessage}>{error}</div>
           <div css={styles.action}>
             {isSubmitting ? (
-              <BarLoader height={6} width={200} color={"#007AFF"} />
+              <BarLoader height={6} width={200} color={Colors.primary} />
             ) : (
               <button css={styles.submit} disabled={!submittable} type="submit">
                 ログイン
