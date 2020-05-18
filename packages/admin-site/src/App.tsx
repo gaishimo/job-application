@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react"
-import {
-  useDispatch,
-  Provider as ReduxProvider,
-  useSelector,
-} from "react-redux"
+import { useRecoilState } from "recoil"
 import Router from "./Router"
 import {
   initializeFirebaseApp,
@@ -11,11 +7,10 @@ import {
   listenAuthState,
   setAuthPersistence,
 } from "./libs/firebase"
-import { actions as authActions } from "./reduxModules/auth"
-import store from "./store"
+import { authState } from "./states"
 
 export default function App() {
-  const dispatch = useDispatch()
+  const [, setLoggedIn] = useRecoilState(authState)
   const [ready, setReady] = useState<boolean>(false)
 
   const initialize = useCallback(() => {
@@ -23,17 +18,17 @@ export default function App() {
       initializeFirebaseApp()
       await setAuthPersistence()
       const loggedIn = await checkIfLoggedIn()
-      dispatch(authActions.setLoggedIn(loggedIn))
+      setLoggedIn(loggedIn)
       setReady(true)
     })()
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     initialize()
 
     const stopListeningAuthState = listenAuthState(user => {
       const loggedIn = user != null && !user.isAnonymous
-      dispatch(authActions.setLoggedIn(loggedIn))
+      setLoggedIn(loggedIn)
     })
 
     return () => {
@@ -43,9 +38,5 @@ export default function App() {
 
   if (!ready) return null
 
-  return (
-    <ReduxProvider store={store}>
-      <Router />
-    </ReduxProvider>
-  )
+  return <Router />
 }

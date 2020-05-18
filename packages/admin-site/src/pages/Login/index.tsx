@@ -2,16 +2,15 @@
 import { css, jsx } from "@emotion/core"
 import { useState, FormEvent, useCallback } from "react"
 import BarLoader from "react-spinners/BarLoader"
-import { useHistory } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useRecoilState } from "recoil"
 import Layout from "../../Layout"
 import { FieldGroup } from "../../parts"
+import { authState } from "../../states"
 import { useControlledInput } from "../../libs/hooks"
 import { signInWithEmail } from "../../libs/firebase"
-import { actions as authActions } from "../../reduxModules/auth"
 
 export default function LoginPage() {
-  const dispatch = useDispatch()
+  const [, setLoggedIn] = useRecoilState(authState)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [error, setError] = useState<string | null>("")
 
@@ -23,7 +22,8 @@ export default function LoginPage() {
     setIsSubmitting(true)
     try {
       await signInWithEmail(email.value, password.value)
-      dispatch(authActions.setLoggedIn(true))
+      setLoggedIn(true)
+      // dispatch(authActions.setLoggedIn(true))
     } catch (e) {
       console.log(e)
       if (["auth/user-not-found", "auth/wrong-password"].includes(e.code)) {

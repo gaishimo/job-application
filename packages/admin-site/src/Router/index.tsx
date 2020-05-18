@@ -1,12 +1,12 @@
 import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useRecoilValue } from "recoil"
 import LoggedIn from "./LoggedIn"
 import * as Pages from "../pages"
-import { State } from "../store"
+import { authState } from "../states"
 
 export default function Router() {
-  const loggedIn = useSelector((state: State) => state.auth.loggedIn)
+  const loggedIn = useRecoilValue(authState)
 
   return (
     <BrowserRouter>

@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import { useHistory } from "react-router-dom"
-import { useDispatch } from "react-redux"
 import { SerializedStyles } from "@emotion/serialize"
+import { useRecoilState } from "recoil"
 import { TextButton } from "./parts"
 import { signOut } from "./libs/firebase"
-import { authActions } from "./reduxModules/"
+import { authState } from "./states"
 
 type Props = {
   title: string
@@ -19,18 +19,18 @@ type Props = {
 
 export default function Layout(props: Props) {
   const history = useHistory()
-  const dispatch = useDispatch()
+  const [, setLoggedIn] = useRecoilState(authState)
 
   async function signOutWithMessage() {
     console.log("signOutWithMessage()")
     try {
       await signOut()
+      setLoggedIn(false)
+      window.alert("ログアウトしました。")
     } catch (e) {
       console.log(e)
       return
     }
-    dispatch(authActions.setLoggedIn(false))
-    window.alert("ログアウトしました。")
   }
 
   return (
