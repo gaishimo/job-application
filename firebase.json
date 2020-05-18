@@ -13,11 +13,15 @@
     },
     "functions": {
       "host": "127.0.0.1",
-      "port": "5001"
+      "port": "5010"
     },
     "firestore": {
       "host": "127.0.0.1",
       "port": "8090"
+    },
+    "hosting": {
+      "host": "127.0.0.1",
+      "port": "5000"
     }
   },
   "hosting": [
