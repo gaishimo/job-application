@@ -4,12 +4,13 @@ import { useRecoilValue } from "recoil"
 import LoggedIn from "./LoggedIn"
 import * as Pages from "../pages"
 import { authState, appReadyState } from "../states"
+import { Loading } from "../parts"
 
 export default function Router() {
   const appReady = useRecoilValue(appReadyState)
   const loggedIn = useRecoilValue(authState)
 
-  if (!appReady) return null
+  if (!appReady) return <Loading />
   return (
     <BrowserRouter>
       <Switch>
