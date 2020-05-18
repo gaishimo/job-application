@@ -317,6 +317,7 @@ export default function JobApplicationPage() {
                     css={[styles.button, styles.delete]}
                     disabled={!deletable || submitting}
                     onClick={deleteWithConfirmation}
+                    type="button"
                   >
                     削除する
                   </button>
