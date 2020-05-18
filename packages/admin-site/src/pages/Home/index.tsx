@@ -3,7 +3,7 @@ import { css, jsx } from "@emotion/core"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { CSVLink } from "react-csv"
-import { ClipLoader } from "react-spinners"
+import { ClipLoader, BeatLoader } from "react-spinners"
 import { JobEntry } from "@etco-job-application/core"
 import ListItem from "./ListItem"
 import Layout from "../../Layout"
@@ -13,20 +13,6 @@ import { useQuery } from "../../libs/hooks"
 import { formatDate } from "../../utils/date"
 
 const RECORD_PER_PAGE = 20
-
-// const header = [
-//   "id",
-//   "no",
-//   "name",
-//   "email",
-//   "age",
-//   "jobId",
-//   "reason",
-//   "status",
-//   "memo",
-//   "entriedAt",
-//   "updatedAt",
-// ]
 
 const CSV_HEADERS = [
   { label: "No.", key: "no" },
@@ -136,7 +122,11 @@ export default function HomePage() {
           />
         </div>
         <div css={styles.view}>
-          {entries === null && <div>loading...</div>}
+          {entries === null && (
+            <div css={styles.dataLoader}>
+              <BeatLoader color={"#137cee"} size={10} margin={2} />
+            </div>
+          )}
           {entries && entries.length === 0 && (
             <div css={styles.noRecord}>
               {searchText.length > 0
@@ -224,6 +214,9 @@ const styles = {
     marginTop: 80,
     textAlign: "center",
     fontSize: "1rem",
+  }),
+  dataLoader: css({
+    marginTop: 200,
   }),
   data: css({
     paddingBottom: 50,

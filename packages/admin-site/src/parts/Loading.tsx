@@ -5,7 +5,7 @@ import HashLoader from "react-spinners/HashLoader"
 export default function Loading() {
   return (
     <div css={styles.container}>
-      <HashLoader css={styles.loader} size={50} color="#007AFF" />
+      <HashLoader css={styles.loader} size={30} color="#007AFF" />
     </div>
   )
 }
