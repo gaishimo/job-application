@@ -8,8 +8,6 @@ dist/
 
 .env
 
-/packages/functions/core
-
 package.temp.json
 .runtimeconfig.json
 
