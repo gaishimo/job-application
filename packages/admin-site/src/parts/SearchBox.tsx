@@ -6,11 +6,12 @@ import { GoSearch } from "react-icons/go"
 import { useControlledInput } from "../libs/hooks"
 
 type Props = {
+  initialValue: string
   onSearch: (text: string) => void
 }
 
 export default function SearchBox(props: Props) {
-  const input = useControlledInput("")
+  const input = useControlledInput(props.initialValue)
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()

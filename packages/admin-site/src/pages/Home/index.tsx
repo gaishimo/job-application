@@ -7,11 +7,13 @@ import ListItem from "./ListItem"
 import Layout from "../../Layout"
 import { SearchBox, TextButton } from "../../parts"
 import { fetchJobEntries } from "../../libs/logics"
+import { useQuery } from "../../libs/hooks"
 
 const RECORD_PER_PAGE = 20
 
 export default function HomePage() {
   const history = useHistory()
+  const query = useQuery()
   const [searchText, setSearchText] = useState<string>("")
   const [pageIndex, setPageIndex] = useState<number>(0)
   const [entries, setEntries] = useState<JobEntry[] | null>(null)
@@ -47,6 +49,7 @@ export default function HomePage() {
   }
 
   async function searchByText(text: string) {
+    history.push(`/?query=${text}`)
     setSearchText(text)
     setEndReached(false)
     load(null, text)
@@ -72,14 +75,17 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    load()
+    load(null, query.get("query") || "")
   }, [])
 
   return (
     <Layout title="応募一覧" containerWidth={900} showLogoutButton>
       <div css={styles.container}>
         <div css={styles.search}>
-          <SearchBox onSearch={searchByText} />
+          <SearchBox
+            initialValue={query.get("query") || ""}
+            onSearch={searchByText}
+          />
         </div>
         <div css={styles.view}>
           {entries === null && <div>loading...</div>}
