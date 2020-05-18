@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core"
 import { useFormik } from "formik"
 import { Fragment, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import TextareaAutoSize from "react-autosize-textarea"
 import * as Yup from "yup"
 import BarLoader from "react-spinners/BarLoader"
@@ -15,7 +15,11 @@ import {
 import Layout from "../../Layout"
 import { FieldGroup } from "../../parts"
 import { range } from "../../utils/numberUtils"
-import { fetchJobEntry } from "../../libs/logics"
+import {
+  fetchJobEntry,
+  updateJobEntry,
+  deleteJobEntry,
+} from "../../libs/logics"
 import { formatDate } from "../../utils/date"
 
 type Fields = {
@@ -34,6 +38,7 @@ const validationSchema = Yup.object({
     .max(50, "氏名は50文字以内で入力してください"),
   email: Yup.string()
     .max(255, "255文字以内で入力してください")
+    .required("メールアドレスを入力してください")
     .email("メールアドレスのフォーマットが正しくありません"),
   age: Yup.number().required("年齢を選択してください"),
   jobId: Yup.string().required("希望職種を選択してください"),
@@ -46,9 +51,13 @@ const validationSchema = Yup.object({
 
 export default function JobApplicationPage() {
   const { id } = useParams()
+  const history = useHistory()
   const [loading, setLoading] = useState<boolean>(false)
   const [notFound, setNotFound] = useState<boolean>(false)
   const [fetchedJobEntry, setFetchedJobEntry] = useState<JobEntry | null>(null)
+  const [submitting, setSubmitting] = useState<boolean>(false)
+  const [deleting, setDeleting] = useState<boolean>(false)
+
   const form = useFormik<Fields>({
     initialValues: {
       name: "",
@@ -59,10 +68,27 @@ export default function JobApplicationPage() {
       status: ENTRY_STATUS_IDS.waiting,
       memo: "",
     },
+    enableReinitialize: true,
     validationSchema,
     onSubmit: submit,
   })
-  const submittable = Object.keys(form.errors).length === 0 && form.touched
+
+  function valueChanged() {
+    if (fetchedJobEntry == null) return false
+    const fetched = fetchedJobEntry as any
+    return Object.entries(form.values).some(([key, value]) => {
+      console.log(
+        `key: ${key} a: [${fetched[key] || ""}], b: [${value}]`,
+        fetched[key] !== value,
+      )
+      return `${fetched[key] || ""}` !== `${value}`
+    })
+  }
+
+  const submittable =
+    fetchedJobEntry && Object.keys(form.errors).length === 0 && valueChanged()
+  const deletable =
+    fetchedJobEntry && fetchedJobEntry.status === ENTRY_STATUS_IDS.done
 
   async function load() {
     const d = await fetchJobEntry(id)
@@ -83,15 +109,56 @@ export default function JobApplicationPage() {
     })
   }
 
+  function goBackWithConfirmation() {
+    if (valueChanged()) {
+      const ok = window.confirm("変更した内容を破棄してもよろしいですか?")
+      if (ok) {
+        history.goBack()
+      }
+    } else {
+      history.goBack()
+    }
+  }
+
+  async function deleteWithConfirmation() {
+    if (!deletable) return
+    const ok = window.confirm(
+      "削除後は復元することはできません。削除してよろしいですか?",
+    )
+    if (!ok) return
+    setDeleting(true)
+    try {
+      await deleteJobEntry(id)
+      window.alert("応募を削除しました。")
+      history.goBack()
+    } catch (e) {
+      window.alert("削除に失敗しました。")
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   async function submit(values: Fields) {
+    if (!submittable) return
+    setSubmitting(true)
     const fields = {
       name: values.name,
       email: values.email,
       age: parseInt(values.age, 10),
       jobId: values.jobId,
       reason: values.reason,
+      status: values.status,
+      memo: values.memo,
     }
-    // form.setSubmitting(false)
+    try {
+      await updateJobEntry(id, fields)
+      await load()
+      window.alert("更新しました。")
+    } catch (e) {
+      window.alert("登録に失敗しました。")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   function hasError(field: keyof Fields) {
@@ -106,7 +173,13 @@ export default function JobApplicationPage() {
   }, [])
 
   return (
-    <Layout title="応募詳細" containerWidth={500}>
+    <Layout
+      title="応募詳細"
+      containerWidth={500}
+      showBackButton
+      backButtonStyle={styles.backButton}
+      onBack={goBackWithConfirmation}
+    >
       <div css={styles.page}>
         {loading && <div css={styles.loading}>Loading...</div>}
         {notFound && (
@@ -194,7 +267,7 @@ export default function JobApplicationPage() {
                 {fetchedJobEntry &&
                   formatDate(
                     fetchedJobEntry?.entriedAt,
-                    "yyyy年MM月dd日 HH時mm分",
+                    "yyyy年MM月dd日(EEE) HH時mm分",
                   )}
               </div>
             </FieldGroup>
@@ -203,7 +276,7 @@ export default function JobApplicationPage() {
                 {fetchedJobEntry &&
                   formatDate(
                     fetchedJobEntry?.updatedAt,
-                    "yyyy年MM月dd日 HH時mm分",
+                    "yyyy年MM月dd日(EEE) HH時mm分",
                   )}
               </div>
             </FieldGroup>
@@ -235,31 +308,40 @@ export default function JobApplicationPage() {
               />
             </FieldGroup>
             <div css={styles.actions}>
-              {form.isSubmitting ? (
-                <BarLoader
-                  height={6}
-                  width={200}
-                  css={styles.progressBar}
-                  color={"#007AFF"}
-                />
-              ) : (
-                <Fragment>
+              <Fragment>
+                {deleting ? (
+                  <BarLoader
+                    height={6}
+                    width={100}
+                    css={styles.progressBar}
+                    color={"#D0021B"}
+                  />
+                ) : (
                   <button
                     css={[styles.button, styles.delete]}
-                    disabled={fetchedJobEntry?.status !== ENTRY_STATUS_IDS.done}
-                    onClick={() => {}}
+                    disabled={!deletable || submitting}
+                    onClick={deleteWithConfirmation}
                   >
                     削除する
                   </button>
+                )}
+                {submitting ? (
+                  <BarLoader
+                    height={6}
+                    width={100}
+                    css={styles.progressBar}
+                    color={"#007AFF"}
+                  />
+                ) : (
                   <button
                     css={[styles.button, styles.submit]}
-                    disabled={!submittable}
+                    disabled={!submittable || deleting}
                     type="submit"
                   >
                     更新する
                   </button>
-                </Fragment>
-              )}
+                )}
+              </Fragment>
             </div>
           </form>
         )}
@@ -269,6 +351,10 @@ export default function JobApplicationPage() {
 }
 
 const styles = {
+  backButton: css({
+    position: "absolute",
+    left: -100,
+  }),
   page: css({
     paddingBottom: 70,
   }),
@@ -327,8 +413,4 @@ const styles = {
   }),
   submit: css({}),
   progressBar: css({ borderRadius: 2 }),
-  entrySent: css({
-    textAlign: "center",
-    marginBottom: 100,
-  }),
 }

@@ -49,3 +49,26 @@ export async function fetchJobEntries(
     moreRecordsExist,
   }
 }
+
+type UpdateFields = Pick<
+  JobEntry,
+  "name" | "email" | "age" | "jobId" | "reason" | "status" | "memo"
+>
+
+export async function updateJobEntry(
+  id: string,
+  fields: UpdateFields,
+  now: Date = new Date(),
+) {
+  const docRef = firebase.firestore().collection("jobEntries").doc(id)
+  const updates: Partial<JobEntry> = {
+    ...fields,
+    updatedAt: now,
+  }
+  await docRef.update(updates)
+}
+
+export async function deleteJobEntry(id: string) {
+  const docRef = firebase.firestore().collection("jobEntries").doc(id)
+  await docRef.delete()
+}

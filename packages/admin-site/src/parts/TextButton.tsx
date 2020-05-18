@@ -4,7 +4,7 @@ import { SerializedStyles } from "@emotion/serialize"
 
 type Props = {
   title: string
-  styles?: SerializedStyles[]
+  styles?: (SerializedStyles | undefined)[]
   onClick?: () => void
 }
 

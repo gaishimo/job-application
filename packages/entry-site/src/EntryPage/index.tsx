@@ -105,6 +105,7 @@ const validationSchema = Yup.object({
     .required("氏名を入力してください")
     .max(50, "氏名は50文字以内で入力してください"),
   email: Yup.string()
+    .required("メールアドレスを入力してください")
     .max(255, "255文字以内で入力してください")
     .email("メールアドレスのフォーマットが正しくありません"),
   age: Yup.number().required("年齢を選択してください"),

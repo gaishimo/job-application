@@ -27,7 +27,7 @@ const styles = {
   error: css({
     marginTop: 8,
     fontSize: "0.9rem",
-    minHeight: 24,
+    minHeight: 30,
     color: "red",
   }),
 }

@@ -8,7 +8,7 @@ const LOCALES = {
 export function formatDate(
   d: Date | number,
   formatString: string,
-  localeKey?: keyof typeof LOCALES,
+  localeKey: keyof typeof LOCALES = "ja",
 ) {
   const locale = localeKey ? LOCALES[localeKey] : undefined
   return format(d, formatString, { locale })
