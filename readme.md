@@ -1,66 +1,108 @@
 
-## Prerequisite
+## Setup
 
-Please install yarn
+### Install yarn
 
 ```
 npm install -g yarn
 ```
 
+### Create and configure a firebase project
 
-## Install
+https://console.firebase.google.com/
+
+- Add a web app and copy sdk configurations
+- Authentication: Enable Email/Password on Sign-in method
+- Database: Create a Firestore database
+- Hosting: Enable Hosting and add another site (for admin-site)
+
+### Install packages
 
 ```
 yarn install
 ```
 
-## Build
+### Set Environmenal variables in .npmrc
+
+```
+cp .npmrc-template .npmrc
+# Please edit .npmrc
+```
+
+### Prepare .firebaserc
+
+```
+cp .firebaserc-template .firebaserc
+# Please edit .firebaserc
+```
+
+
+### Build
 
 ```
 yarn build
 ```
 
+### Deploy storage rules
 
-## Entry Site
 
 ```
-cd packages/entry-site
+yarn deploy:firestore-rules
 ```
 
-### Start Dev Server
+## Deploy
+
+
+Execute the following in advance.
 
 ```
-yarn start
+npx firebase login
 ```
 
-
-## functions
-
-
-.envファイルを用意
-
-```
-cp packages/functions/.env.sample packages/functions/.env
-# 内容を編集
-```
-
-### config:set (function config値の設定)
+### Deploy functions
 
 ```
 yarn functions:config:set
+yarn deploy:functions
+```
+
+### Deploy entry-site
+
+```
+yarn deploy:hosting:entry-site
+```
+
+### Deploy admin-site
+
+```
+yarn deploy:hosting:admin-site
 ```
 
 
-### Run Emulator
+
+## Development
+
+### Run Emulator (for running functions and firestore on local)
 
 ```
 yarn emulator
 ```
 
-### Deploy
+### Start entry-site
 
 ```
-yarn functions:deploy
+yarn start:entry-site
 ```
+
+http://127.0.0.1:8080
+
+### Start admin-site
+
+```
+yarn start:admin-site
+```
+
+http://127.0.0.1:9080
+
 
 
