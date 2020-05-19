@@ -61,7 +61,7 @@ cp .firebaserc-template .firebaserc
 yarn build
 ```
 
-### Deploy storage rules
+### Deploy firestore rules
 
 
 ```
@@ -71,7 +71,7 @@ yarn deploy:firestore-rules
 ## Deploy
 
 
-Execute the following in advance.
+Login to firebase in advance.
 
 ```
 npx firebase login
