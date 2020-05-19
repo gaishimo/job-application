@@ -128,6 +128,10 @@ function mailBodyForApplicant(jobEntry: JobEntry) {
     jobEntry.reason,
     "-------------------------------------------",
     "",
+    "",
+    "よろしくお願い致します。",
+    "",
+    "◯◯社人事部",
   ].join("\n")
 }
 
@@ -143,10 +147,6 @@ function mailBodyForAdmin(jobEntry: JobEntry) {
     jobEntry.reason,
     "-------------------------------------------",
     "",
-    "",
-    "よろしくお願い致します。",
-    "",
-    "◯◯社人事部",
   ].join("\n")
 }
 
