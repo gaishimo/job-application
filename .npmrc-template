@@ -6,7 +6,7 @@ fr_project_id=xxxxx
 fr_app_id=xxxxx
 
 # set firebase function url
-api_url_add_job_entry=https://127.0.0.1:5010/addJobEntry
+api_url_add_job_entry=https://xxxxx/addJobEntry
 
 sendgrid_api_key=xxxxx
 notification_mail_from=xxxxx@example.com
