@@ -30,7 +30,7 @@ npm install -g yarn
 https://console.firebase.google.com/
 
 - Add a web app and copy sdk configurations
-- Authentication: Enable Email/Password on Sign-in method
+- Authentication: Enable Email/Password on Sign-in method and create a test user
 - Database: Create a Firestore database
 - Hosting: Enable Hosting and add another site (for admin-site)
 
