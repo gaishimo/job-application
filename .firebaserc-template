@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "<Project ID>": {
+      "hosting": {
+        "entry-site": [
+          "<Entry Site Resource Name>"
+        ],
+        "admin-site": [
+          "<Admin Site Resource Name>"
+        ]
+      }
+    }
+  }
+}

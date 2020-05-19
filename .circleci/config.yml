@@ -97,6 +97,9 @@ commands:
     steps:
       - checkout
       - run:
-          name: Prepare .npmrc
+          name: "Prepare .npmrc"
           command: 'echo $NPMRC | base64 -di > .npmrc'
+      - run:
+          name: "Prepare .firebaserc"
+          command: 'cp -f .firebaserc-ci .firebaserc'
       - build_and_check
