@@ -48,6 +48,7 @@ module.exports = {
   ],
   devServer: {
     host: "127.0.0.1",
+    port: 9080,
     disableHostCheck: true,
     contentBase: path.resolve(__dirname, "public"),
     historyApiFallback: true,
