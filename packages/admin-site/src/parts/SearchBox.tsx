@@ -22,7 +22,12 @@ export default function SearchBox(props: Props) {
   return (
     <form onSubmit={onSubmit}>
       <div css={styles.box}>
-        <input type="search" css={styles.input} {...input} />
+        <input
+          type="search"
+          css={styles.input}
+          placeholder="名前検索"
+          {...input}
+        />
         <IconContext.Provider
           value={{ color: Colors.darkGrey, size: "1.2rem" }}
         >
@@ -48,6 +53,10 @@ const styles = {
     fontSize: "1rem",
     color: Colors.veryDarkGrey,
     letterSpacing: "0.1rem",
+    "::placeholder": {
+      fontSize: "0.85rem",
+      letterSpacing: 0.1,
+    },
   }),
   icon: css({
     position: "absolute",
