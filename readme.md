@@ -1,4 +1,22 @@
 
+## About this
+
+This is an example repository of job application system.
+
+Features:
+- Job Application Form
+- Admin Site
+
+
+Technologies:
+- TypeScript
+- yarn workspaces
+- Firebase (Firestore, Functions, Hosting)
+- React
+- Webpack
+- Emotion
+
+
 ## Setup
 
 ### Install yarn
