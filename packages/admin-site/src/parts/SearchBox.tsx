@@ -28,9 +28,7 @@ export default function SearchBox(props: Props) {
           placeholder="名前検索"
           {...input}
         />
-        <IconContext.Provider
-          value={{ color: Colors.darkGrey, size: "1.2rem" }}
-        >
+        <IconContext.Provider value={{ color: Colors.darkGrey, size: "20px" }}>
           <GoSearch css={styles.icon} />
         </IconContext.Provider>
       </div>
@@ -53,6 +51,7 @@ const styles = {
     fontSize: "1rem",
     color: Colors.veryDarkGrey,
     letterSpacing: "0.1rem",
+    appearance: "textfield",
     "::placeholder": {
       fontSize: "0.85rem",
       letterSpacing: 0.1,
