@@ -17,7 +17,7 @@
     "@etco-job-application/core": "0.0.0",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
-    "react": "~16.13.1",
+    "react": "16.9.0",
     "react-autosize-textarea": "^7.0.0",
     "react-dom": "~16.13.1",
     "react-spinners": "^0.8.3",
