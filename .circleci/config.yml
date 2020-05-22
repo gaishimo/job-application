@@ -12,7 +12,7 @@ executors:
   working_directory: ~/app
 
 workflows:
-  check_and_build:
+  default:
     jobs:
       - check_and_build:
           filters:
