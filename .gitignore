@@ -6,6 +6,8 @@ node_modules/
 
 dist/
 
+.expo/
+
 .env
 
 package.temp.json
@@ -13,5 +15,6 @@ package.temp.json
 
 .npmrc
 .firebaserc
+
 
 /packages/entry-mobile/app.json
