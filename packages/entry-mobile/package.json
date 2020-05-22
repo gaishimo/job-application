@@ -1,0 +1,39 @@
+{
+  "name": "@etco-job-application/entry-mobile",
+  "version": "0.0.0",
+  "main": "__generated__/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start --config app.development.json",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "postinstall": "expo-yarn-workspaces postinstall"
+  },
+  "dependencies": {
+    "@etco-job-application/core": "0.0.0",
+    "axios": "^0.19.2",
+    "expo": "~37.0.3",
+    "expo-constants": "~9.0.0",
+    "formik": "^2.1.4",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-gesture-handler": "~1.6.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-screens": "~2.2.0",
+    "react-native-svg": "11.0.1",
+    "react-native-svg-animated-linear-gradient": "^0.3.4",
+    "react-native-web": "~0.11.7",
+    "yup": "^0.29.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@types/react": "~16.9.23",
+    "@types/react-native": "~0.61.17",
+    "babel-preset-expo": "~8.1.0",
+    "expo-yarn-workspaces": "^1.2.1",
+    "typescript": "~3.8.3"
+  }
+}
