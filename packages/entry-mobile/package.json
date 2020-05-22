@@ -14,7 +14,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "postinstall": "expo-yarn-workspaces postinstall",
-    "publish": "expo publish --release-channel $npm_config_release_channel",
+    "publish": "yarn generate-app-json && expo publish --release-channel $npm_config_release_channel",
     "build:ios": "yarn generate-app-json && expo build:ios --type archive --release-channel $npm_config_release_channel",
     "build:android": "yarn generate-app-json && expo build:android --type apk --release-channel $npm_config_release_channel",
     "download-build:ios": "mkdir -p .build && wget \"$(expo url:ipa)\" -O .build/app-$npm_config_release_channel.ipa",
