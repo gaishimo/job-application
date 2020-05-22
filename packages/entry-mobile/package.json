@@ -4,7 +4,8 @@
   "main": "__generated__/AppEntry.js",
   "private": true,
   "scripts": {
-    "start": "expo start --config app.development.json",
+    "prestart": "../../node_modules/.bin/ts-node ./scripts/prepare-app-json.ts",
+    "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

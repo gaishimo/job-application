@@ -13,3 +13,5 @@ package.temp.json
 
 .npmrc
 .firebaserc
+
+/packages/entry-mobile/app.json

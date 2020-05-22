@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "entry-mobile",
-     "slug": "entry-mobile",
+    "slug": "entry-mobile",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "extra": {
+      "apiUrls": {
+        "addJobEntry": "https://xxxxx"
+      }
     }
   }
 }
