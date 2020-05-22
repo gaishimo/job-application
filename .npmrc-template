@@ -11,3 +11,10 @@ api_url_add_job_entry=https://xxxxx/addJobEntry
 sendgrid_api_key=xxxxx
 notification_mail_from=xxxxx@example.com
 notification_mail_to=xxxxx@example.com
+
+# mobile app
+release_channel=xxxxx
+ios_bundle_identifier=com.example
+ios_build_number=1.0.0
+android_package_name=com.example
+android_version_code=1

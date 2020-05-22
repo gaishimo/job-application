@@ -4,13 +4,18 @@
   "main": "__generated__/AppEntry.js",
   "private": true,
   "scripts": {
-    "prestart": "../../node_modules/.bin/ts-node ./scripts/prepare-app-json.ts",
-    "start": "expo start",
+    "start": "yarn generate-app-json && expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "postinstall": "expo-yarn-workspaces postinstall"
+    "postinstall": "expo-yarn-workspaces postinstall",
+    "publish": "expo publish --release-channel $npm_config_release_channel",
+    "build:ios": "yarn generate-app-json && expo build:ios --type archive --release-channel $npm_config_release_channel",
+    "build:android": "yarn generate-app-json && expo build:android --type apk --release-channel $npm_config_release_channel",
+    "download-build:ios": "mkdir -p .build && wget \"$(expo url:ipa)\" -O .build/app-$npm_config_release_channel.ipa",
+    "download-build:android": "mkdir -p .build && wget \"$(expo url:apk)\" -O .build/app.$npm_config_release_channel.apk",
+    "generate-app-json": "../../node_modules/.bin/ts-node ./scripts/prepare-app-json.ts"
   },
   "dependencies": {
     "@etco-job-application/core": "0.0.0",
