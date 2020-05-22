@@ -18,6 +18,10 @@ workflows:
           filters:
             branches:
               ignore: /^release\/.*$/
+      - publish_mobile:
+          filters:
+            branches:
+              only: master
 
   deploy_functions:
     jobs:
@@ -49,6 +53,16 @@ jobs:
       - slack/status:
           fail_only: true
           webhook: '${SLACK_WEBHOOK}'
+  publish_mobile:
+    executor: node
+    steps:
+      - prepare_for_deploy
+      - run: sudo npm install -g expo-cli
+      - run: expo login -u $EXPO_ACCOUNT -p $EXPO_PASSWORD --non-interactive
+      - run:
+          name: Expo Publish
+          working_directory: ./packages/entry-mobile
+          command: yarn run publish
   deploy_functions:
     executor: node
     steps:
