@@ -4,8 +4,7 @@
     "target": "es5",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "dist",
-    "skipLibCheck": true
+    "outDir": "dist"
   },
   "include": ["./src/**/*"]
 }
