@@ -154,6 +154,7 @@ export default function EntryScreen() {
                       error={getErrorOf("name")}
                     >
                       <TextInput
+                        autoFocus
                         style={[
                           styles.textInput,
                           hasError("name") && styles.textInputErrored,
