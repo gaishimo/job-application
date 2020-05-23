@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useRef } from "react"
 import {
   Alert,
   View,
@@ -25,7 +25,6 @@ import TextButton from "./parts/TextButton"
 import { Colors, FontSizes } from "../../values"
 import * as apiRequests from "../../libs/apiRequests"
 import { range } from "../../utils/numberUtils"
-import { platform } from "os"
 
 type Fields = {
   name: string
@@ -63,6 +62,8 @@ const validationSchema = Yup.object({
 })
 
 export default function EntryScreen() {
+  const emailInput = useRef<TextInput>(null)
+
   const [focusingField, setFocusingField] = useState<keyof Fields | null>(null)
   const [policyAgreed, togglePolicyAgreed] = useState<boolean>(false)
   const [entrySent, setEntrySent] = useState<boolean>(false)
@@ -156,12 +157,14 @@ export default function EntryScreen() {
                     >
                       <TextInput
                         autoFocus
+                        returnKeyType="next"
                         style={[
                           styles.textInput,
                           hasError("name") && styles.textInputErrored,
                         ]}
                         maxLength={50}
                         {...inputProps(f, "name")}
+                        onSubmitEditing={() => emailInput.current?.focus()}
                       />
                     </FieldGroup>
                     <FieldGroup
@@ -170,10 +173,15 @@ export default function EntryScreen() {
                       error={getErrorOf("email")}
                     >
                       <TextInput
+                        ref={emailInput}
+                        returnKeyType="next"
                         style={[
                           styles.textInput,
                           hasError("email") && styles.textInputErrored,
                         ]}
+                        onSubmitEditing={() => {
+                          setFocusingField("age")
+                        }}
                         {...inputProps(f, "email")}
                       />
                     </FieldGroup>
@@ -202,7 +210,6 @@ export default function EntryScreen() {
                           f.setFieldTouched("age")
                         }}
                         onValueChange={value => {
-                          console.log("onValueChange:", value)
                           f.setFieldTouched("age")
                           f.setFieldValue("age", value)
                           setFocusingField(null)
