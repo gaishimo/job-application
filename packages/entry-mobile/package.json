@@ -10,6 +10,7 @@
     "lint:fix": "../../node_modules/.bin/eslint --fix '**/*.ts{,x}'",
     "start": "yarn generate-app-json && expo start",
     "android": "expo start --android",
+    "android-device-reverse": "for port in 19000 19001 19002; do adb reverse tcp:$port tcp:$port; done",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
