@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Linking,
+  Platform,
 } from "react-native"
 import { KeyboardAwareScrollView as ScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Formik, FormikProps } from "formik"
@@ -24,6 +25,7 @@ import TextButton from "./parts/TextButton"
 import { Colors, FontSizes } from "../../values"
 import * as apiRequests from "../../libs/apiRequests"
 import { range } from "../../utils/numberUtils"
+import { platform } from "os"
 
 type Fields = {
   name: string
@@ -135,9 +137,8 @@ export default function EntryScreen() {
           >
             {f => {
               const submittable =
-                Object.keys(f.errors).length === 0 &&
-                Object.keys(f.touched).length === 5 &&
-                policyAgreed
+                validationSchema.isValidSync(f.values) && policyAgreed
+
               function hasError(field: keyof Fields) {
                 return f.touched[field] === true && f.errors[field] != null
               }
@@ -188,9 +189,8 @@ export default function EntryScreen() {
                             ? `${f.values.age} 歳`
                             : "選択してください"
                         }
-                        selectedValue={
-                          f.values.age === "" ? "30" : f.values.age
-                        }
+                        initialValueForIOS={"30"}
+                        selectedValue={f.values.age}
                         options={range(1, 100).map(i => ({
                           value: i.toString(),
                           label: i.toString(),
@@ -202,6 +202,8 @@ export default function EntryScreen() {
                           f.setFieldTouched("age")
                         }}
                         onValueChange={value => {
+                          console.log("onValueChange:", value)
+                          f.setFieldTouched("age")
                           f.setFieldValue("age", value)
                           setFocusingField(null)
                         }}
@@ -221,6 +223,7 @@ export default function EntryScreen() {
                             ? getJobName(f.values.jobId)
                             : "選択してください"
                         }
+                        initialValueForIOS={""}
                         selectedValue={
                           f.values.jobId === "" ? "" : f.values.jobId
                         }
@@ -248,6 +251,7 @@ export default function EntryScreen() {
                       <TextInput
                         style={[styles.textInput, styles.textarea]}
                         multiline
+                        numberOfLines={4}
                         placeholder=""
                         placeholderTextColor="#C8C8C8"
                         {...inputProps(f, "reason")}
@@ -340,7 +344,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   textInput: {
-    height: 50,
+    height: 40,
     width: "100%",
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "#E6E6E6",
@@ -356,6 +360,9 @@ const styles = StyleSheet.create({
   },
   textarea: {
     height: 160,
+    padding: 8,
+    alignItems: "flex-start",
+    textAlignVertical: "top",
   },
   policyArea: {
     marginVertical: 20,

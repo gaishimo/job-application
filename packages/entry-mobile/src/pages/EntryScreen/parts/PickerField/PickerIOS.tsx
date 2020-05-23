@@ -7,10 +7,11 @@ type Props = {
   onValueChange: (v: string) => void
 }
 
-export default function FieldPicker(props: Props) {
+export default function PickerIOS(props: Props) {
   return (
     <Picker
       selectedValue={props.selectedValue}
+      mode="dialog"
       onValueChange={props.onValueChange}
     >
       {props.options.map(({ value, label }) => (
