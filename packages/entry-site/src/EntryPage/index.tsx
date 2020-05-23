@@ -167,8 +167,7 @@ export default function EntryPage() {
     return form.touched[field] ? form.errors[field] : null
   }
 
-  const submittable =
-    Object.keys(form.errors).length === 0 && form.values.policyAgreement
+  const submittable = form.isValid && form.values.policyAgreement
 
   return (
     <section>

@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Linking,
   Platform,
+  StatusBar,
 } from "react-native"
 import { KeyboardAwareScrollView as ScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Formik, FormikProps } from "formik"
@@ -106,7 +107,7 @@ export default function EntryScreen() {
   }, [])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, styles.safeareaAdjust]}>
       <Header title="求人エントリー" />
       {entrySent ? (
         <View style={styles.entrySent}>
@@ -137,8 +138,7 @@ export default function EntryScreen() {
             onSubmit={submit}
           >
             {f => {
-              const submittable =
-                validationSchema.isValidSync(f.values) && policyAgreed
+              const submittable = f.isValid && policyAgreed
 
               function hasError(field: keyof Fields) {
                 return f.touched[field] === true && f.errors[field] != null
@@ -312,6 +312,17 @@ export default function EntryScreen() {
 }
 
 const styles = StyleSheet.create({
+  safeareaAdjust: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  scroll: {
+    flex: 1,
+  },
+  contentContainer: {},
   entrySent: {
     alignItems: "center",
     paddingTop: 30,
@@ -330,14 +341,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignItems: "center",
   },
-  container: {
-    flex: 1,
-    width: "100%",
-  },
-  scroll: {
-    flex: 1,
-  },
-  contentContainer: {},
   guide: {
     paddingVertical: 40,
     alignItems: "center",
