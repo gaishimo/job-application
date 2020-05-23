@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StyleSheet, Text } from "react-native"
+import { StyleSheet, Text, TouchableOpacity } from "react-native"
 import { RectButton } from "react-native-gesture-handler"
 import { Colors, FontSizes } from "../../../values"
 
@@ -11,12 +11,12 @@ type Props = {
 
 export default function PrimaryButton(props: Props) {
   return (
-    <RectButton
+    <TouchableOpacity
       style={[styles.button, props.disabled && styles.buttonDisabled]}
       onPress={props.disabled ? () => {} : props.onPress}
     >
       <Text style={styles.title}>{props.title}</Text>
-    </RectButton>
+    </TouchableOpacity>
   )
 }
 
