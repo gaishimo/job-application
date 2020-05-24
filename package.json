@@ -18,6 +18,7 @@
     "preemulator": "firebase functions:config:get --project $npm_config_fr_project_id > .runtimeconfig.json",
     "start:admin-site": "cd packages/admin-site; yarn start",
     "start:entry-site": "cd packages/entry-site; yarn start",
+    "start:entry-mobile": "cd packages/entry-mobile; yarn start",
     "functions:config:set": "cd packages/functions; yarn config:set",
     "deploy:hosting:admin-site": "cd packages/admin-site; yarn deploy",
     "deploy:hosting:entry-site": "cd packages/entry-site; yarn deploy",
