@@ -25,6 +25,17 @@ Technologies:
 npm install -g yarn
 ```
 
+### Install expo cli (If you use mobile app)
+
+```
+npm install -g expo-cli
+```
+
+### Install expo client app
+
+Refer https://docs.expo.io/get-started/installation/#2-mobile-app-expo-client-for-ios.
+
+
 ### Create and configure a firebase project
 
 https://console.firebase.google.com/
@@ -122,5 +133,10 @@ yarn start:admin-site
 
 http://127.0.0.1:9080
 
+### Start entry-mobile
 
+
+```
+yarn start:entry-mobile
+```
 
