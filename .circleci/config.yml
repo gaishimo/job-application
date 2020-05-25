@@ -63,6 +63,9 @@ jobs:
           name: Expo Publish
           working_directory: ./packages/entry-mobile
           command: yarn run publish
+      - slack/status:
+          fail_only: false
+          webhook: '${SLACK_WEBHOOK}'
   deploy_functions:
     executor: node
     steps:
