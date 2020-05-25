@@ -22,6 +22,7 @@
     "functions:config:set": "cd packages/functions; yarn config:set",
     "deploy:hosting:admin-site": "cd packages/admin-site; yarn deploy",
     "deploy:hosting:entry-site": "cd packages/entry-site; yarn deploy",
+    "publish:entry-mobile": "cd packages/entry-mobile; yarn run publish",
     "deploy:functions": "cd packages/functions; yarn deploy",
     "deploy:firestore-rules": "firebase deploy --only firestore:rules --project $npm_config_fr_project_id"
   },

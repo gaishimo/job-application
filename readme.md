@@ -107,6 +107,12 @@ yarn deploy:hosting:entry-site
 yarn deploy:hosting:admin-site
 ```
 
+### Publish entry-mobile
+
+```
+yarn publish:entry-mobile
+```
+
 
 
 ## Development
