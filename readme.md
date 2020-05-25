@@ -31,7 +31,7 @@ npm install -g yarn
 npm install -g expo-cli
 ```
 
-### Install expo client app
+### Install expo client app (If you use mobile app)
 
 Refer https://docs.expo.io/get-started/installation/#2-mobile-app-expo-client-for-ios.
 
